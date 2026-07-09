@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Helper · AI, Fintech & Deep Tech · BA-BHAAI1115U</title>
+<style>
+:root{
+  --bg:#f6f7fa; --panel:#ffffff; --panel2:#eef1f6; --text:#1c2333; --muted:#5b6474;
+  --blue:#2563eb; --green:#059669; --amber:#b45309; --red:#dc2626; --purple:#7c3aed; --cyan:#0891b2; --teal:#0d9488;
+  --border:#d8dde8; --gold:#8a6508;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:15px}
+header{max-width:1240px;margin:0 auto;padding:26px 22px 8px}
+h1{font-size:24px;margin:0}
+.sub{color:var(--muted);font-size:13.5px;margin-top:3px}
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1240px;margin:0 auto;padding:10px 22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+#q{flex:1;min-width:230px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:14px;outline:none}
+#q:focus{border-color:var(--blue)}
+.tab{padding:8px 15px;border-radius:999px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:13.5px;cursor:pointer;font-weight:600}
+.tab.active{background:var(--blue);color:#ffffff;border-color:var(--blue)}
+#hits{color:var(--muted);font-size:12.5px;margin-left:auto}
+main{max-width:1240px;margin:0 auto;padding:14px 22px 90px}
+section.pane{display:none}
+section.pane.show{display:block}
+h2{font-size:20px;margin:30px 0 6px;padding-bottom:6px;border-bottom:2px solid var(--accent,var(--border))}
+h3{font-size:16px;margin:22px 0 8px;color:var(--gold)}
+.intro{color:var(--muted);font-size:13.5px;max-width:900px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin-top:12px}
+.grid.wide{grid-template-columns:repeat(auto-fill,minmax(460px,1fr))}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:0 1px 3px rgba(20,30,60,.06)}
+.card h4{margin:0 0 6px;font-size:14.5px}
+.card p{margin:5px 0;font-size:13.5px;color:#333c4e}
+.card .why{color:var(--muted);font-size:12.8px}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.t-ai{background:#dbeafe;color:#1d4ed8} .t-gov{background:#d1fae5;color:#047857} .t-q{background:#cffafe;color:#0e7490} .t-bc{background:#fef3c7;color:#92650a} .t-x{background:#ede9fe;color:#6d28d9} .t-case{background:#fee2e2;color:#b91c1c}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
+th{color:var(--muted);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:7px 10px;border-bottom:1px solid var(--border)}
+td{padding:7px 10px;border-bottom:1px solid #e3e7ef;vertical-align:top}
+tr:nth-child(even) td{background:#f0f2f7}
+.num{color:var(--gold);font-weight:700;white-space:nowrap}
+.formula{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-size:14px;margin:8px 0}
+.vs{border-left:3px solid var(--red)}
+.answer{border-left:3px solid var(--green)}
+.upgrade{background:#e8f6ee;border:1px solid #b7e2cb;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:13px}
+.upgrade b{color:#047857}
+.steps{counter-reset:st;list-style:none;padding:0;margin:12px 0}
+.steps li{counter-increment:st;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 16px 12px 52px;margin-bottom:8px;position:relative;font-size:14px}
+.steps li::before{content:counter(st);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#ffffff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.steps li b{color:var(--gold)}
+details{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:7px 0}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+details p{color:#333c4e;font-size:13.5px;margin:8px 0 2px}
+.pill{display:inline-block;background:var(--panel2);border:1px solid var(--border);border-radius:999px;padding:3px 11px;font-size:12.5px;margin:3px 4px 0 0;color:#333c4e}
+.callout{background:#fdf6df;border:1px solid #e5d089;border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14px}
+.callout b{color:#8a6508}
+mark{background:#fff1a8;color:#1c2333;border-radius:3px;padding:0 1px}
+.copybtn{float:right;background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:3px 10px;font-size:12px;cursor:pointer;color:var(--text);margin-left:8px}
+tr.dom td{background:#e6ebf4;font-weight:700;color:#1c2333;font-size:13px;letter-spacing:.02em}
+a.goto{color:var(--blue);font-weight:600;text-decoration:none;border-bottom:1px dashed #93b4f5;white-space:nowrap}
+a.goto:hover{background:#e3edff;border-radius:4px}
+.copybtn:hover{background:#dde3ee}
+.tpl .br{color:#b45309;font-weight:700}
+.alt{color:#6d28d9;background:#f1ecfd;border-radius:4px;padding:0 3px}
+.mtx{display:grid;grid-template-columns:110px 1fr 1fr;gap:6px;margin:10px 0;max-width:620px}
+.mtx div{padding:10px;border-radius:8px;font-size:12.8px}
+.mtx .hd{background:none;color:var(--muted);font-weight:700;display:flex;align-items:center}
+.mtx .tp{background:#d9f3e2;border:1px solid #8ac7a1}
+.mtx .fn{background:#fde2e2;border:1px solid #f0a8a8}
+.mtx .fp{background:#fdf0d2;border:1px solid #e3cd8e}
+.mtx .tn{background:#dfe9f7;border:1px solid #a9c3e8}
+.hidden{display:none!important}
+@media print{
+  body{background:#fff;color:#000;font-size:11px}
+  .topbar,#q,.tab,#hits{display:none}
+  section.pane{display:block!important;page-break-before:always}
+  .card,details,.steps li{border-color:#bbb;background:#fff}
+  .card p,details p{color:#222}
+  details{page-break-inside:avoid}
+  details[open] summary~*{display:block}
+  h2{color:#000;border-color:#000} h3{color:#000}
+  .num{color:#000}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Exam Helper — AI, Fintech &amp; Deep Tech</h1>
+  <div class="sub">BA-BHAAI1115U · CBS Summer 2026 · 4-hour open-book exam · Built from all course material (W1–W3), the teacher's recap deck, the official List of Concepts, the Exam Approach page, and the practice test.</div>
+</header>
+<div class="topbar"><div class="topbar-inner">
+  <input id="q" type="text" placeholder="Search everything… (e.g. 'F1 score', 'entanglement', 'proxy creep', 'erasure')">
+  <button class="tab active" data-t="pix">🧭 Index</button>
+  <button class="tab" data-t="p0">⚡ Rules of Thumb</button>
+  <button class="tab" data-t="p1">① Multiple Choice</button>
+  <button class="tab" data-t="p2">② Short Answer</button>
+  <button class="tab" data-t="p3">③ Case Reasoning</button>
+  <button class="tab" data-t="p4">④ Drills &amp; Worked Examples</button>
+  <span id="hits"></span>
+</div></div>
+<main>
+
+<!-- ==================== PANE IX: INDEX ==================== -->
+<section class="pane show" id="pix">
+<div class="intro"><b>Start here.</b> Read the question, find the row that sounds like it, click <b>Go to</b> — it runs the search across all tabs and shows every matching card, definition, model answer and drill. Clear the search box to come back.</div>
+<table id="guidetable">
+<tr><th style="width:40%">The question asks…</th><th style="width:30%">It's about</th><th>Go to</th></tr>
+
+<tr class="dom"><td colspan="3">🤖 AI / ML — how AI learns</td></tr>
+<tr><td>"Why is the team still cleaning data?" / where does ML effort go</td><td>The 80/20 rule — data before algorithm</td><td><a href="#" class="goto" data-q="80/20">80/20 rule</a></td></tr>
+<tr><td>Why split the data / what is the test set for</td><td>Train / validation / test split</td><td><a href="#" class="goto" data-q="train validation test">split</a></td></tr>
+<tr><td>Perfect on training data, fails on new data (same world)</td><td>Overfitting (high variance)</td><td><a href="#" class="goto" data-q="overfitting">overfitting</a></td></tr>
+<tr><td>Model too simple / barely trained / generic output</td><td>Underfitting, bias–variance trade-off</td><td><a href="#" class="goto" data-q="bias variance">bias–variance</a></td></tr>
+<tr><td>Worked at launch, wrong months/years later — the world changed (NOT overfitting)</td><td><b>Distribution shift</b></td><td><a href="#" class="goto" data-q="distribution shift">distribution shift</a></td></tr>
+<tr><td>Did the inputs change, or the input→outcome relationship?</td><td>Data drift vs concept drift</td><td><a href="#" class="goto" data-q="concept drift">data vs concept drift</a></td></tr>
+<tr><td>Model is wrong but still reports high confidence</td><td>The confidence trap</td><td><a href="#" class="goto" data-q="confidence trap">confidence trap</a></td></tr>
+<tr><td>"Of my flags, how many were right?"</td><td>Precision (column question)</td><td><a href="#" class="goto" data-q="precision">precision</a></td></tr>
+<tr><td>"Of the real cases, how many did I catch?"</td><td>Recall (row question)</td><td><a href="#" class="goto" data-q="recall">recall</a></td></tr>
+<tr><td>Which error to tolerate — miss or false alarm?</td><td>FN vs FP, annoyance vs disaster</td><td><a href="#" class="goto" data-q="disaster">FN vs FP</a></td></tr>
+<tr><td>One metric when classes are imbalanced</td><td>F1 score (harmonic mean)</td><td><a href="#" class="goto" data-q="f1">F1</a></td></tr>
+<tr><td>"99% accurate — should I be impressed?"</td><td>Accuracy trap, base rate</td><td><a href="#" class="goto" data-q="accuracy trap">accuracy trap</a></td></tr>
+<tr><td>Fill in TP / FP / FN / TN from a story</td><td>Confusion matrix (rows = reality)</td><td><a href="#" class="goto" data-q="confusion matrix">matrix</a></td></tr>
+<tr><td>Labelled examples vs finding groups vs learning by reward</td><td>Supervised / unsupervised / reinforcement</td><td><a href="#" class="goto" data-q="supervised">learning types</a></td></tr>
+<tr><td>Does it read, create, or act?</td><td>Cognitive → Generative → Agentic tiers</td><td><a href="#" class="goto" data-q="cognitive generative agentic">AI families</a></td></tr>
+<tr><td>How does an LLM actually work / does it understand?</td><td>Next-token prediction, plausible ≠ correct</td><td><a href="#" class="goto" data-q="next-token">LLM mechanism</a></td></tr>
+<tr><td>Confident answer, made-up facts or citations</td><td>Hallucination (property, not bug)</td><td><a href="#" class="goto" data-q="hallucination">hallucination</a></td></tr>
+<tr><td>Chatbot needs current/changing facts</td><td>RAG vs fine-tuning</td><td><a href="#" class="goto" data-q="rag">RAG</a></td></tr>
+<tr><td>The 2017 architecture / "attention"</td><td>Transformer</td><td><a href="#" class="goto" data-q="transformer">transformer</a></td></tr>
+<tr><td>Text → entities, sentiment, meaning</td><td>NLP pipeline (tokenise → POS → NER…)</td><td><a href="#" class="goto" data-q="NER">NLP pipeline</a></td></tr>
+<tr><td>Multi-step autonomous system fails / how reliable end-to-end</td><td>Agentic loop + error compounding</td><td><a href="#" class="goto" data-q="error compounding">compounding</a></td></tr>
+<tr><td>Where must a human check the machine?</td><td>Human-in-the-loop (a design choice)</td><td><a href="#" class="goto" data-q="human-in-the-loop">human gate</a></td></tr>
+<tr><td>Randomness / creativity of LLM output</td><td>Temperature</td><td><a href="#" class="goto" data-q="temperature">temperature</a></td></tr>
+<tr><td>Model doesn't know recent events</td><td>Training cutoff</td><td><a href="#" class="goto" data-q="training cutoff">training cutoff</a></td></tr>
+<tr><td>Teach the model a style, tone, or domain</td><td>Fine-tuning (vs RAG)</td><td><a href="#" class="goto" data-q="fine-tuning">fine-tuning</a></td></tr>
+<tr><td>Reshaping raw data into usable signals</td><td>Feature engineering</td><td><a href="#" class="goto" data-q="feature engineering">feature engineering</a></td></tr>
+<tr><td>Layers learning increasingly abstract patterns</td><td>Neural networks / deep learning</td><td><a href="#" class="goto" data-q="deep learning">deep learning</a></td></tr>
+<tr><td>Why only a handful of companies train LLMs</td><td>Training cost &amp; scale ($50–100M, 13T tokens)</td><td><a href="#" class="goto" data-q="training cost">training cost</a></td></tr>
+<tr><td>Which error costs more — state the ratio</td><td>Cost asymmetry (input to every threshold)</td><td><a href="#" class="goto" data-q="cost asymmetry">cost asymmetry</a></td></tr>
+<tr><td>"Type I error" / "Type II error" — which is which?</td><td>Type I = FP (false alarm) · Type II = FN (miss)</td><td><a href="#" class="goto" data-q="type ii">Type I / II</a></td></tr>
+
+<tr class="dom"><td colspan="3">🏛 Data Governance</td></tr>
+<tr><td>Data collected for X, used for Y</td><td>Purpose limitation</td><td><a href="#" class="goto" data-q="purpose limitation">purpose limitation</a></td></tr>
+<tr><td>Old consent stretched to a new use</td><td>Consent decay</td><td><a href="#" class="goto" data-q="consent decay">consent decay</a></td></tr>
+<tr><td>"Delete my data" — but it trained a model / sits on a chain</td><td>Art. 17 erasure + the 5 options</td><td><a href="#" class="goto" data-q="erasure options">erasure</a></td></tr>
+<tr><td>"Explain this automated decision" / no appeal route</td><td>Art. 22, explainability</td><td><a href="#" class="goto" data-q="explainability">Art. 22</a></td></tr>
+<tr><td>Hiring / credit / hospital AI — what law applies?</td><td>EU AI Act high-risk classification</td><td><a href="#" class="goto" data-q="high-risk">high-risk</a></td></tr>
+<tr><td>How many AI projects fail, and why?</td><td>87% — governance, not algorithms</td><td><a href="#" class="goto" data-q="87">87%</a></td></tr>
+<tr><td>"Where did this data/field come from?"</td><td>Data lineage</td><td><a href="#" class="goto" data-q="lineage">lineage</a></td></tr>
+<tr><td>Who is responsible/accountable for data?</td><td>Business owns, IT manages · controller vs processor</td><td><a href="#" class="goto" data-q="business owns">ownership</a></td></tr>
+<tr><td>Risk check required before high-risk processing</td><td>DPIA</td><td><a href="#" class="goto" data-q="DPIA">DPIA</a></td></tr>
+<tr><td>Collecting more than the purpose needs</td><td>Data minimisation</td><td><a href="#" class="goto" data-q="minimisation">minimisation</a></td></tr>
+<tr><td>Humans rubber-stamp the algorithm</td><td>Automation bias / performative oversight</td><td><a href="#" class="goto" data-q="automation bias">automation bias</a></td></tr>
+<tr><td>Deployed model quietly degrades — whose job to notice?</td><td>Model drift monitoring, retraining policy</td><td><a href="#" class="goto" data-q="drift monitoring">monitoring</a></td></tr>
+<tr><td>Vendor quotes its own accuracy figure</td><td>Self-reported metric proxy</td><td><a href="#" class="goto" data-q="self-reported">vendor claims</a></td></tr>
+<tr><td>EU vs US vs UK vs China rules</td><td>Global regulatory patchwork</td><td><a href="#" class="goto" data-q="patchwork">patchwork</a></td></tr>
+<tr><td>Build protection in from the start, not bolted on</td><td>Privacy by design</td><td><a href="#" class="goto" data-q="privacy by design">privacy by design</a></td></tr>
+<tr><td>How sensitive is this data — how must it be handled?</td><td>Classification tiers T1–T4</td><td><a href="#" class="goto" data-q="classification tiers">tiers</a></td></tr>
+<tr><td>Is this organisation's data discipline broken?</td><td>Five governance warning signs</td><td><a href="#" class="goto" data-q="warning signs">warning signs</a></td></tr>
+<tr><td>Single source of truth / who maintains quality daily</td><td>Master data, catalogue, stewardship</td><td><a href="#" class="goto" data-q="master data">master data</a></td></tr>
+<tr><td>Firms that collect and resell personal data</td><td>Data brokers (Incogni / DeleteMe)</td><td><a href="#" class="goto" data-q="data brokers">data brokers</a></td></tr>
+<tr><td>Regulator demands explainability — but it's GenAI</td><td>The regulatory gap (traditional ML vs GenAI)</td><td><a href="#" class="goto" data-q="regulatory gap">regulatory gap</a></td></tr>
+<tr><td>Document the model's behaviour + accountable owner</td><td>Model card</td><td><a href="#" class="goto" data-q="model card">model card</a></td></tr>
+<tr><td>Why does this regulation exist at all?</td><td>Regulations as scar tissue (CA → GDPR)</td><td><a href="#" class="goto" data-q="scar tissue">scar tissue</a></td></tr>
+
+<tr class="dom"><td colspan="3">⚛ Quantum</td></tr>
+<tr><td>0 and 1 at the same time</td><td>Qubit, superposition, measurement collapse</td><td><a href="#" class="goto" data-q="superposition">superposition</a></td></tr>
+<tr><td>Two linked qubits — measure one, the other fixes</td><td>Entanglement</td><td><a href="#" class="goto" data-q="entanglement">entanglement</a></td></tr>
+<tr><td>Wrong answers cancel, right answer amplifies</td><td>Interference — how quantum computes</td><td><a href="#" class="goto" data-q="interference">interference</a></td></tr>
+<tr><td>Why near absolute zero / qubits are fragile</td><td>Decoherence, NISQ era, error correction</td><td><a href="#" class="goto" data-q="decoherence">decoherence</a></td></tr>
+<tr><td>Faster search</td><td>Grover's algorithm (√N)</td><td><a href="#" class="goto" data-q="grover">Grover</a></td></tr>
+<tr><td>Breaks RSA / ECDSA by factoring</td><td>Shor's algorithm</td><td><a href="#" class="goto" data-q="shor">Shor</a></td></tr>
+<tr><td>"Steal encrypted data now, read it later"</td><td>Harvest Now, Decrypt Later</td><td><a href="#" class="goto" data-q="harvest">HNDL</a></td></tr>
+<tr><td>When/how to migrate encryption · deadlines</td><td>PQC, NIST 2030/2035, migration sequence</td><td><a href="#" class="goto" data-q="pqc">PQC</a></td></tr>
+<tr><td>Is this quantum claim credible?</td><td>Hype test: hardware + algorithm + problem shape</td><td><a href="#" class="goto" data-q="hype">hype test</a></td></tr>
+<tr><td>What can quantum actually help with?</td><td>4 problem shapes · finance apps (experimental)</td><td><a href="#" class="goto" data-q="problem shapes">problem shapes</a></td></tr>
+<tr><td>Which machine — IBM, IonQ, Microsoft…?</td><td>Six hardware approaches, no winner yet</td><td><a href="#" class="goto" data-q="hardware">hardware</a></td></tr>
+<tr><td>Swap encryption algorithms without a rebuild</td><td>Crypto-agility</td><td><a href="#" class="goto" data-q="crypto-agility">crypto-agility</a></td></tr>
+<tr><td>When will quantum actually arrive?</td><td>Slipping timelines, falling qubit requirements</td><td><a href="#" class="goto" data-q="timeline">timelines</a></td></tr>
+
+<tr class="dom"><td colspan="3">⛓ Blockchain</td></tr>
+<tr><td>Why no bank/intermediary is needed</td><td>The trust mechanism (3 layers)</td><td><a href="#" class="goto" data-q="trust mechanism">trust</a></td></tr>
+<tr><td>What happens if you change one block</td><td>Hash chain — tamper-evident</td><td><a href="#" class="goto" data-q="hash chain">hash chain</a></td></tr>
+<tr><td>How the network agrees without voting</td><td>Consensus = rule-following</td><td><a href="#" class="goto" data-q="consensus">consensus</a></td></tr>
+<tr><td>Who earns money, and how / who wins the race</td><td>Mining, proof-of-work, block reward + fees</td><td><a href="#" class="goto" data-q="block reward">mining</a></td></tr>
+<tr><td>When is a transaction signed / when is it final</td><td>Private-key signing → finality (~6 blocks)</td><td><a href="#" class="goto" data-q="finality">signing &amp; finality</a></td></tr>
+<tr><td>Waiting queue, fees decide order</td><td>Mempool</td><td><a href="#" class="goto" data-q="mempool">mempool</a></td></tr>
+<tr><td>Anyone can join vs invitation only — which chain?</td><td>Public vs private/permissioned</td><td><a href="#" class="goto" data-q="permissioned">public vs private</a></td></tr>
+<tr><td>"Should this even be a blockchain?"</td><td>Necessity vs overhead (trust test)</td><td><a href="#" class="goto" data-q="necessity">necessity test</a></td></tr>
+<tr><td>Real assets as digital tokens</td><td>Tokenisation (BUIDL, $10–16T by 2030)</td><td><a href="#" class="goto" data-q="tokenisation">tokenisation</a></td></tr>
+<tr><td>Digital euro / programmable money</td><td>CBDC</td><td><a href="#" class="goto" data-q="cbdc">CBDC</a></td></tr>
+<tr><td>Self-executing code / needs outside data</td><td>Smart contracts, oracle problem</td><td><a href="#" class="goto" data-q="smart contract">smart contracts</a></td></tr>
+<tr><td>Court/GDPR says delete — chain says no</td><td>Permanence vs right to change (collision A)</td><td><a href="#" class="goto" data-q="permanence">immutability clash</a></td></tr>
+<tr><td>Lost the key = lost the money / "you are the bank"</td><td>Wallet, private vs public key</td><td><a href="#" class="goto" data-q="private key">keys</a></td></tr>
+<tr><td>Spending the same money twice</td><td>Double-spend + the four validation checks</td><td><a href="#" class="goto" data-q="double-spend">double-spend</a></td></tr>
+<tr><td>Majority control rewrites history</td><td>51% attack</td><td><a href="#" class="goto" data-q="51%">51% attack</a></td></tr>
+<tr><td>The tech worked — the project still died</td><td>Consortium governance (TradeLens pattern)</td><td><a href="#" class="goto" data-q="governance technology">failed consortia</a></td></tr>
+<tr><td>Why traditional settlement takes days</td><td>T+2 vs finality in minutes; counterparty risk</td><td><a href="#" class="goto" data-q="t+2">T+2</a></td></tr>
+
+<tr class="dom"><td colspan="3">🧩 Cases &amp; cross-domain (Section 3 of the exam)</td></tr>
+<tr><td>Diagnose a failure case — where do I start?</td><td>7-step skeleton + 3 failure categories</td><td><a href="#" class="goto" data-q="metric corruption">diagnose</a></td></tr>
+<tr><td>"There's bias" — but which kind?</td><td>4 bias types + cures</td><td><a href="#" class="goto" data-q="label bias">bias types</a></td></tr>
+<tr><td>"We did it / it answered / our own numbers say so"</td><td>3 proxy-creep shapes</td><td><a href="#" class="goto" data-q="proxy creep">proxy creep</a></td></tr>
+<tr><td>A system property collides with a legal requirement</td><td>4 collisions (A–D)</td><td><a href="#" class="goto" data-q="collision">collisions</a></td></tr>
+<tr><td>"Name the law" (Goodhart, Conway, Murphy…)</td><td>The laws wall with case anchors</td><td><a href="#" class="goto" data-q="goodhart">laws</a></td></tr>
+<tr><td>How to fix / redesign the system</td><td>7 conditions + fix toolbox</td><td><a href="#" class="goto" data-q="conditions">fixes</a></td></tr>
+<tr><td>When (and on what) to retrain — or recalibrate, or roll back</td><td>Retraining triggers &amp; the right tool</td><td><a href="#" class="goto" data-q="retrain">retraining</a></td></tr>
+<tr><td>The model is hallucinating — prevent, detect, respond</td><td>The hallucination ladder</td><td><a href="#" class="goto" data-q="hallucination ladder">hallucination fix</a></td></tr>
+<tr><td>What belongs on the monitoring dashboard</td><td>Monitoring design (subgroup P/R, drift, override rate)</td><td><a href="#" class="goto" data-q="dashboard">monitoring</a></td></tr>
+<tr><td>How to roll out safely (pilot → measure → scale)</td><td>Deployment discipline, shadow mode, kill criteria</td><td><a href="#" class="goto" data-q="shadow mode">deployment</a></td></tr>
+<tr><td>What does the EU AI Act actually require?</td><td>Regulatory radar: obligations checklist + fines</td><td><a href="#" class="goto" data-q="conformity">EU AI Act duties</a></td></tr>
+<tr><td>Which regulator/rule applies to this case?</td><td>Routing: AI Act · GDPR · MiCA · BCBS 239 · NIST</td><td><a href="#" class="goto" data-q="routing rule">reg routing</a></td></tr>
+<tr><td>Two laws feel similar — which one?</td><td>Commonly confused pairs (Goodhart/Campbell, Peter/D-K…)</td><td><a href="#" class="goto" data-q="confused pairs">law pairs</a></td></tr>
+<tr><td>"What SHOULD they do?" — decision question</td><td>W3 governance-decision template</td><td><a href="#" class="goto" data-q="decision under uncertainty">decide</a></td></tr>
+<tr><td>Need a real case as evidence/analogy</td><td>19-case evidence bank</td><td><a href="#" class="goto" data-q="Knight Capital">cases</a></td></tr>
+<tr><td>Need a "what good looks like" citation</td><td>Success contrasts</td><td><a href="#" class="goto" data-q="Waymo">success cases</a></td></tr>
+<tr><td>Need a ready-made sentence/paragraph</td><td>Copy-paste blocks</td><td><a href="#" class="goto" data-q="template">templates</a></td></tr>
+<tr><td>Agentic AI meets blockchain (teacher's favourite)</td><td>Accountability gap × finality</td><td><a href="#" class="goto" data-q="agentic smart contracts">agentic × chain</a></td></tr>
+<tr><td>Close the answer with a second domain</td><td>Cross-domain closers</td><td><a href="#" class="goto" data-q="closers">closers</a></td></tr>
+<tr><td>The model changed the very behaviour it predicts</td><td>Lucas Critique / adaptive failure</td><td><a href="#" class="goto" data-q="lucas">Lucas Critique</a></td></tr>
+<tr><td>A failure nobody noticed for months</td><td>Silent failure → monitoring + owner</td><td><a href="#" class="goto" data-q="silent">silent failure</a></td></tr>
+<tr><td>"What saved it — luck or structure?"</td><td>Lucky vs structural save (near-misses)</td><td><a href="#" class="goto" data-q="lucky">save type</a></td></tr>
+<tr><td>They knew about the problem and told no one</td><td>Discovery without disclosure</td><td><a href="#" class="goto" data-q="disclosure">disclosure</a></td></tr>
+<tr><td>Was it malice, or did nobody check?</td><td>Hanlon's Razor (negligence vs intent)</td><td><a href="#" class="goto" data-q="hanlon">Hanlon</a></td></tr>
+<tr><td>Grand system built from scratch never works</td><td>Gall's Law (evolve from simple)</td><td><a href="#" class="goto" data-q="gall">Gall</a></td></tr>
+<tr><td>Investors can't tell science from story</td><td>Clarke's Third Law + information asymmetry</td><td><a href="#" class="goto" data-q="clarke">Clarke</a></td></tr>
+<tr><td>Confident amateur overrules the experts</td><td>Dunning-Kruger Effect</td><td><a href="#" class="goto" data-q="dunning">Dunning-Kruger</a></td></tr>
+<tr><td>"It's better than the status quo — good enough?"</td><td>The counterfactual trap</td><td><a href="#" class="goto" data-q="counterfactual">counterfactual</a></td></tr>
+<tr><td>How to climb from grade 7 to 10–12</td><td>The depth ladder (5 steps)</td><td><a href="#" class="goto" data-q="depth ladder">depth ladder</a></td></tr>
+<tr><td>Need a sentence that scores</td><td>Magic sentences</td><td><a href="#" class="goto" data-q="magic sentences">magic sentences</a></td></tr>
+<tr><td>How to spend the exam hours</td><td>Time plan per section</td><td><a href="#" class="goto" data-q="time plan">time plan</a></td></tr>
+</table>
+</section>
+
+<!-- ==================== PANE 0: RULES OF THUMB ==================== -->
+<section class="pane" id="p0">
+<div class="intro"><b>One-line decision rules.</b> Each is an IF → THEN you can apply in under 5 seconds. When a question stumps you, scan this tab first — it usually tells you which concept the question is really about.</div>
+
+<h2 style="--accent:var(--blue)">🎯 Precision vs Recall</h2>
+<div class="grid wide">
+<div class="card"><h4>THE rule: find the disaster</h4>
+<p><b>Ask one question: which mistake is the disaster?</b></p>
+<p>Miss (FN) = disaster → <b>chase RECALL</b> — cast a wide net, tolerate noise.<br>
+False alarm (FP) = the expensive one → <b>chase PRECISION</b> — only act when sure.</p>
+<p class="why">Never "always recall" — find the disaster <i>every single time</i>. (Wildfire alert → recall. Small-business spam filter → precision, because the lost customer email IS the disaster.)</p></div>
+<div class="card"><h4>Instant classifiers</h4>
+<p>Lives/safety/security at stake if missed → <b>recall</b> (cancer screening, fire alarm, overheat shutdown, passport impostor).<br>
+Blocking/rejecting real people or losing real opportunities → <b>precision</b> (spam filter, content takedowns, auto-rejecting candidates).</p>
+<p class="why">Capacity override: if the review team can only handle 40 of your 200 daily flags → precision first, whatever the stakes. Recall you can't act on is worthless.</p></div>
+<div class="card"><h4>When to tolerate FNs vs FPs (the seesaw)</h4>
+<p>You never want errors — you choose which to <b>tolerate</b>. Lower threshold → more FPs, fewer FNs (= recall). Raise threshold → more FNs, fewer FPs (= precision).</p>
+<p>Tolerate <b>FPs</b> when a miss is catastrophic/irreversible → chase recall (cancer, wildfire, impostor, big-loss fraud).<br>
+Tolerate <b>FNs</b> when the false alarm is the harmful one → chase precision (spam filter, auto-rejecting candidates, blocking real customers, maxed review capacity).</p>
+<p class="why">Hooks: "FN is silent, FP is noisy" — if the silent, later, bigger cost is unsurvivable, accept the noise. And ask <b>who suffers each error</b>: FP landing on innocent people at scale → precision; FN landing on a victim → recall.</p></div>
+<div class="card"><h4>Formula picker</h4>
+<p>"Of my flags, how many right?" → <b>precision = TP/(TP+FP)</b> (column).<br>
+"Of the real cases, how many caught?" → <b>recall = TP/(TP+FN)</b> (row).<br>
+"One number, imbalanced classes, both errors matter" → <b>F1 = 2PR/(P+R)</b>.<br>
+"How often right overall?" → accuracy — <b>distrust it</b> whenever one class is rare (ask the base rate first).</p></div>
+</div>
+
+<h2 style="--accent:var(--red)">🩺 Diagnosis rules (what went wrong?)</h2>
+<div class="grid wide">
+<div class="card"><h4>First move, always</h4>
+<p><b>Suspect the data before the algorithm</b> (80/20). Then ask: data problem or deployment problem?</p>
+<p class="why">Bad from day one → data/labels or overfitting. Good at launch, decayed later → drift/world changed. Fine in the lab, failed in rollout → deployment/verification/monitoring.</p></div>
+<div class="card"><h4>Overfitting or distribution shift?</h4>
+<p>Failed on new data from the <b>same world</b> → overfitting (memorised, didn't generalise).<br>
+Worked fine, then the <b>world changed</b> → distribution shift.</p>
+<p class="why">Bonus split: inputs changed → data drift; input→outcome <i>relationship</i> changed → concept drift.</p></div>
+<div class="card"><h4>Which failure shape? (3-way)</h4>
+<p>KPI looks great while reality gets worse → <b>Metric Corruption</b>.<br>
+Incentives/silos/leadership caused it → <b>Organisational Failure</b>.<br>
+World moved on, or the system changed the behaviour it predicts → <b>Adaptive Failure</b>.</p></div>
+<div class="card"><h4>Which bias? (4-way, in order)</h4>
+<p>① Is the <b>label</b> itself a past biased decision? → historical/label bias.<br>
+② Sensitive attribute removed but <b>correlated features</b> rebuild it? → proxy bias.<br>
+③ Do the model's <b>own outputs feed future training data</b>? → feedback loop bias.<br>
+④ None of the above, group just <b>missing from the data</b>? → representation bias.</p>
+<p class="why">"There's bias" is not a diagnosis — name the mechanism; the cure differs each time.</p></div>
+<div class="card"><h4>Which proxy creep? (3-way)</h4>
+<p>"We <b>did</b> it" = "it works" → activity proxy (verify, don't just deploy).<br>
+"It <b>answered</b>" = "it's correct" → output proxy (ground + validate against source).<br>
+"<b>Our own numbers</b> say it's great" → self-reported proxy (demand independent audit).</p>
+<p class="why">Quick tell: who verified, and were they independent of who built/claimed it?</p></div>
+<div class="card"><h4>Hallucination triggers</h4>
+<p>LLM asked for <b>facts, numbers, citations, current events, or policy</b> without retrieval → assume hallucination risk. Plausible ≠ correct.</p>
+<p class="why">Fix by cause: stale knowledge → RAG; wrong facts → validation gate vs source; style/domain → fine-tune; high stakes → human check. LLMs are for drafting/summarising/exploring — never for retrieval or arithmetic.</p></div>
+</div>
+
+<h2 style="--accent:var(--blue)">🤖 AI/ML quick tests</h2>
+<div class="grid wide">
+<div class="card"><h4>Which AI family is this?</h4>
+<p>Reads/classifies/extracts existing data → <b>cognitive/NLP</b>.<br>
+Creates new content from a prompt → <b>generative</b>.<br>
+Takes multi-step autonomous action on real systems → <b>agentic</b>.</p>
+<p class="why">Misclassify → wrong architecture and wrong risks. The tell for agentic: it <i>does</i> things (refunds, bookings, emails) without per-step approval.</p></div>
+<div class="card"><h4>Which learning type?</h4>
+<p>Have labelled examples with known outcomes → <b>supervised</b>.<br>
+No labels, want structure/groups → <b>unsupervised</b>.<br>
+Learns from rewards/penalties of its own actions → <b>reinforcement</b>.</p>
+<p class="why">The learning type determines what data you need — most business AI is supervised on historical outcomes.</p></div>
+<div class="card"><h4>Should an LLM do this task?</h4>
+<p>Drafting, summarising, translating, explaining, brainstorming → <b>yes</b> (with human review).<br>
+Exact arithmetic, current facts, citations, guaranteed accuracy, final regulated decisions → <b>no</b> — or only with RAG + validation gate + human sign-off.</p>
+<p class="why">Rule: use an LLM to think, draft and explore — never to retrieve facts or calculate.</p></div>
+<div class="card"><h4>RAG or fine-tune?</h4>
+<p>Facts that change (policies, prices, regulations) → <b>RAG</b>.<br>
+Tone, style, domain behaviour → <b>fine-tune</b>.<br>
+Serious enterprise deployment → usually <b>both</b>: fine-tune for behaviour, RAG for facts.</p></div>
+<div class="card"><h4>How much autonomy for an agent?</h4>
+<p>Autonomy is a <b>dial, not a switch</b>. Compute (per-step)^steps first. Human gate wherever a step is <b>irreversible, costly, or regulated</b>. Keep chains short; checkpoint between steps; kill switch at a defined loss level.</p>
+<p class="why">0.95¹⁰ ≈ 60% — ten unsupervised steps is a coin flip with style.</p></div>
+<div class="card"><h4>Trust a vendor accuracy claim?</h4>
+<p>Ask in order: ① what's the <b>base rate</b>? (99% accuracy on 0.2% fraud = useless) ② precision AND recall, by subgroup? ③ <b>who measured it</b> — independent or self-reported? ④ tested on data from <i>our</i> world, or theirs?</p>
+<p class="why">"99.1% accuracy, validated internally" contains three red flags in five words.</p></div>
+</div>
+
+<h2 style="--accent:var(--green)">🏛 Governance quick tests</h2>
+<div class="grid wide">
+<div class="card"><h4>The GDPR 5-second scan</h4>
+<p>Data collected for X, used for Y → <b>purpose limitation</b> (new purpose = new legal basis).<br>
+"Delete my data" + trained model or blockchain → <b>erasure collision</b>.<br>
+Automated decision about a person, no explanation/appeal → <b>Art. 22 / explainability</b>.<br>
+Consent from years ago stretched to a new use → <b>consent decay</b>.<br>
+Collected more than the purpose needs → <b>data minimisation</b>.</p></div>
+<div class="card"><h4>Is it EU AI Act high-risk?</h4>
+<p><b>Does the system decide about people's lives or livelihoods?</b> Hiring, credit scoring, healthcare, justice/enforcement → high-risk → conformity assessment, documented lineage, human oversight, explainability — before deployment.</p>
+<p class="why">Rule: high-risk turns a modelling choice (like a threshold) into a legal one.</p></div>
+<div class="card"><h4>Who's accountable?</h4>
+<p><b>Business owns → business is accountable.</b> IT manages, stewards monitor. Controller decides why/how (accountable); processor just executes.</p>
+<p class="why">If no named owner exists → that IS the governance failure (warning sign #1).</p></div>
+<div class="card"><h4>Is the human oversight real?</h4>
+<p><b>Check the override rate.</b> If the human reviews everything but overrides ~nothing → performative oversight / automation bias, not a safeguard.</p>
+<p class="why">Place the human gate where the action is irreversible, costly, or regulated.</p></div>
+</div>
+
+<h2 style="--accent:var(--cyan)">⚛ Quantum quick tests</h2>
+<div class="grid wide">
+<div class="card"><h4>Which concept is being described?</h4>
+<p>Many states at once until measured → <b>superposition</b>.<br>
+Two qubits, measure one, other instantly fixed → <b>entanglement</b>.<br>
+Wrong answers cancel, right one amplifies → <b>interference</b>.<br>
+Qubit ruined by heat/vibration → <b>decoherence</b>.</p></div>
+<div class="card"><h4>Which algorithm?</h4>
+<p>Searching faster → <b>Grover</b> (quadratic, √N).<br>
+Breaking RSA/ECC/ECDSA by factoring → <b>Shor</b> (exponential).</p>
+<p class="why">Encryption mentioned at all → it's Shor.</p></div>
+<div class="card"><h4>Do I need to act on quantum NOW?</h4>
+<p><b>Secrecy lifetime test:</b> must the data stay secret longer than ~10 years? Yes → HNDL applies, start PQC migration now (migration itself takes 5–10 yrs). No → watch and track, don't bet.</p>
+<p class="why">Deadlines to cite: NIST deprecates RSA 2030, prohibits 2035; NSA 2027.</p></div>
+<div class="card"><h4>Quantum hype detector</h4>
+<p>Ask for the triple: <b>which hardware, which algorithm, which problem shape?</b> Can't name all three specifically → hype. Only 4 shapes benefit: optimisation, simulation, factoring, search.</p>
+<p class="why">Extra red flags: "room temperature", "millions of qubits", "no error correction needed" — all contradict NISQ reality.</p></div>
+</div>
+
+<h2 style="--accent:var(--amber)">⛓ Blockchain quick tests</h2>
+<div class="grid wide">
+<div class="card"><h4>Do you even need a blockchain?</h4>
+<p><b>Do independent, mutually-distrusting parties need shared truth with no trusted middleman?</b><br>
+Yes → blockchain has a case. No (same company, existing trusted party) → <b>use a database</b> (necessity vs overhead).</p></div>
+<div class="card"><h4>Public or private chain?</h4>
+<p>Need KYC/identity, privacy from competitors, speed, regulator comfort → <b>private/permissioned</b> (that's why banks choose it).<br>
+Need openness, censorship-resistance, no gatekeeper → <b>public</b> (accept ~7 tx/s and pseudonymity).</p></div>
+<div class="card"><h4>Memory hooks</h4>
+<p>Hash chain = <b>tamper-EVIDENT, not tamper-proof</b>.<br>
+Immutability ≠ correctness — a confirmed wrong entry is <b>permanently wrong</b>.<br>
+Consensus = every node applying the same rules — <b>no vote, no committee</b>.<br>
+Miners earn = <b>block reward + fees</b>; losers validate the winner.<br>
+Signed by private key at creation; <b>final ~6 blocks later</b>.</p></div>
+<div class="card"><h4>Smart contract red flags</h4>
+<p>Code is law <b>including the bugs</b>; needs outside data → <b>oracle</b> = new trust bottleneck; executes decisions about people → <b>Art. 22</b>; agent + contract + finality → irreversible autonomous mistakes (cap limits, human gate).</p></div>
+</div>
+
+<h2 style="--accent:var(--purple)">🧩 Case-answer rules of thumb</h2>
+<div class="grid wide">
+<div class="card"><h4>The 5-line pre-write (60 seconds)</h4>
+<p><b>CONCEPT</b> → which pattern? · <b>WHY</b> → mechanism &amp; who's harmed · <b>CASE</b> → which analogy from the bank? · <b>X-DOMAIN</b> → which of the 4 connections? · <b>TRADE-OFF</b> → what does my fix cost?</p>
+<p class="why">Then write. Steps 4–5 are the 7→12 jump.</p></div>
+<div class="card"><h4>Future-risk generator</h4>
+<p>Pick the engine that makes it worse: <b>feedback loop</b> (outputs → training data) · <b>compounding</b> (0.95¹⁰≈60%) · <b>drift</b> (world moves) · <b>scale</b> (small % × millions) · <b>HNDL clock</b> · <b>finality</b> (mistakes permanent) · <b>regulatory exposure</b> accruing.</p></div>
+<div class="card"><h4>Fix selector</h4>
+<p>Match fix to diagnosis: label bias → label audit · proxy bias → subgroup fairness audit · feedback loop → break the loop · representation → fix the dataset · activity proxy → verification step · output proxy → grounding + validation · self-reported → independent audit · silent failure → monitoring + owner · agentic → checkpoints + human gate + kill switch · scale-before-data → staged rollout (Waymo).</p></div>
+<div class="card"><h4>Cross-domain picker (choose 1, one sentence)</h4>
+<p>Threshold/error rates → <b>discrimination → EU AI Act</b>.<br>
+Anything stored/immutable → <b>GDPR erasure collision</b>.<br>
+Anything encrypted + long-lived → <b>HNDL/PQC</b>.<br>
+Anything autonomous + transacting → <b>agentic × smart contracts accountability gap</b>.</p>
+<p class="why">End with the trade-off: "this fix costs X — accepted, because Y is the disaster here."</p></div>
+</div>
+</section>
+
+<!-- ==================== PANE 1: MULTIPLE CHOICE ==================== -->
+<section class="pane" id="p1">
+<div class="intro"><b>How to use in the exam:</b> MC questions describe a <i>situation</i> and ask which concept is at play — they rarely ask for cold definitions. Skim the scenario, ask "which trap pair is this?", then check the fact tables below. Search box (top) searches all four tabs at once.</div>
+
+<h2 style="--accent:var(--red)">⚠ Trap pairs — the distinctions MC questions live on</h2>
+<h3>AI / ML</h3>
+<div class="grid wide">
+<div class="card vs"><h4>Overfitting vs. Distribution shift <span class="tag t-ai">AI/ML</span></h4>
+<p><b>Overfitting</b> = fails on new data <i>from the same world</i> (memorised the training set — "the chef who memorised one cookbook").</p>
+<p><b>Distribution shift</b> = <i>the world itself changed</i> after training (2021 fraud model meets 2023 fraud patterns).</p>
+<p class="why">Teacher's recap flags this as "the two most confused terms." Clue words: "performed well at first, then degraded" → shift. "Great on training/validation, bad from day one in production" → overfitting.</p></div>
+
+<div class="card vs"><h4>Data drift vs. Concept drift <span class="tag t-ai">AI/ML</span></h4>
+<p><b>Data drift</b>: the <i>inputs</i> change (new transaction types, new customer mix). Same task, different world.</p>
+<p><b>Concept drift</b>: the <i>input→output relationship</i> changes (what "creditworthy" means shifts after a recession).</p>
+<p class="why">Both are forms of distribution shift / model drift. The confidence trap: the model doesn't know it drifted — it keeps giving high-confidence answers. High confidence ≠ high accuracy.</p></div>
+
+<div class="card vs"><h4>Precision vs. Recall <span class="tag t-ai">AI/ML</span></h4>
+<p><b>Precision</b> = TP/(TP+FP) — "Of my calls, how many were right?" A <b>column</b> question (everything YOU flagged).</p>
+<p><b>Recall</b> = TP/(TP+FN) — "Of what was real, how much did I catch?" A <b>row</b> question (everything REALLY there).</p>
+<p class="why">Same TP numerator, always. The denominator tells you which question you're asking. Miss (FN) = disaster → chase recall. False alarm (FP) = the expensive one → chase precision.</p></div>
+
+<div class="card vs"><h4>NLP vs. Generative vs. Agentic <span class="tag t-ai">AI/ML</span></h4>
+<p><b>NLP reads</b> (text in, meaning out) · <b>GenAI creates</b> (prompt in, content out) · <b>Agentic acts</b> (goal in, action out).</p>
+<p class="why">Practice-test clue: a chatbot that <i>answers</i> is generative; the moment it <i>initiates refunds / sends emails / updates the CRM autonomously</i> it has become agentic. Flagging complaint emails = NLP classification.</p></div>
+
+<div class="card vs"><h4>Supervised vs. Unsupervised vs. Reinforcement <span class="tag t-ai">AI/ML</span></h4>
+<p><b>Supervised</b>: labelled examples (fraud/not fraud) — most business AI. <b>Unsupervised</b>: no labels, finds structure (segmentation, clustering). <b>Reinforcement</b>: trial and error with rewards/penalties (trading bots; the agentic loop "slaps itself on the wrist").</p>
+<p class="why">Clue: "segment 2M customers into natural groups, no predefined categories" → unsupervised.</p></div>
+
+<div class="card vs"><h4>RAG vs. Fine-tuning <span class="tag t-ai">AI/ML</span></h4>
+<p><b>RAG</b>: retrieve current documents at query time, ground the answer in them — cheap per query, knowledge stays current. <b>Fine-tuning</b>: bake knowledge/behaviour into the weights ($10K–500K) — good for style/tone, knowledge frozen at fine-tune time.</p>
+<p class="why">Most enterprise stacks combine both: fine-tune for behaviour, RAG for facts.</p></div>
+
+<div class="card vs"><h4>Bias vs. Variance (trade-off) <span class="tag t-ai">AI/ML</span></h4>
+<p><b>High bias</b> = model too simple → underfits (misses real patterns). <b>High variance</b> = model too complex → overfits (learns noise). You are always trading one risk for the other.</p>
+<p class="why">An <b>undertrained</b> transformer = high bias end: it hasn't learned the patterns yet — outputs are generic/random, poor even on training data.</p></div>
+
+<div class="card vs"><h4>Hallucination — cause, not bug <span class="tag t-ai">AI/ML</span></h4>
+<p>LLMs pick the most <b>statistically plausible</b> continuation, not the most <b>true</b> one — they cannot tell the difference. <b>Plausible ≠ correct</b> is "the defining exam trap."</p>
+<p class="why">Consequences: no reliable arithmetic (numbers are just tokens), no current facts (training cutoff), fabricated citations. Mitigation: RAG grounding + human verification — mitigates, never eliminates.</p></div>
+</div>
+
+<h3>Data Governance</h3>
+<div class="grid wide">
+<div class="card vs"><h4>Data controller vs. Data processor <span class="tag t-gov">Governance</span></h4>
+<p><b>Controller</b> decides <i>why and how</i> data is used (bears main accountability). <b>Processor</b> only handles data on the controller's instruction.</p>
+<p class="why">Ownership rule from the course: <b>business owns</b> (accountable for accuracy, purpose, compliance), <b>IT manages</b> (storage, access, security), <b>steward monitors</b> (day-to-day quality).</p></div>
+
+<div class="card vs"><h4>Compliance vs. Fairness <span class="tag t-gov">Governance</span></h4>
+<p><b>Compliance</b>: may the company legally use the data (consent, purpose, legal basis)? <b>Fairness</b>: are the resulting decisions equitable? You can be fully GDPR-compliant and still discriminatory (location proxies income).</p>
+<p class="why">Separating these two is the teacher's own tier-5 example on the governance question — say both words.</p></div>
+
+<div class="card vs"><h4>Data drift response vs. Erasure response <span class="tag t-gov">Governance</span></h4>
+<p>Model got worse over time → <b>drift monitoring + retrain</b> (a performance problem). Person wants their data gone → <b>Art. 17 erasure options</b> (a rights problem: retrain / differential privacy / document + assess).</p>
+<p class="why">Both end in "retrain" — but the trigger and the justification differ. Name the right trigger.</p></div>
+</div>
+
+<h3>Quantum</h3>
+<div class="grid wide">
+<div class="card vs"><h4>Superposition vs. Entanglement vs. Interference <span class="tag t-q">Quantum</span></h4>
+<p><b>Superposition</b>: one qubit in multiple states (0 AND 1) at once, until measured. <b>Entanglement</b>: two qubits linked so measuring one instantly fixes the other (anti-correlated). <b>Interference</b>: wrong answers cancel out, right answers reinforce — the mechanism that makes quantum algorithms actually compute.</p>
+<p class="why">MC clue: "wrong answers cancel, correct answer amplifies before measurement" → interference (NOT superposition).</p></div>
+
+<div class="card vs"><h4>Grover vs. Shor <span class="tag t-q">Quantum</span></h4>
+<p><b>Grover's</b> = search speedup (quadratic: √N checks instead of N/2). <b>Shor's</b> = factoring large numbers (exponential speedup) → breaks RSA and ECC/ECDSA encryption.</p>
+<p class="why">Anything about "breaking encryption" = Shor. Anything about "searching a huge unstructured space faster" = Grover.</p></div>
+
+<div class="card vs"><h4>HNDL — the threat is NOW <span class="tag t-q">Quantum</span></h4>
+<p><b>Harvest Now, Decrypt Later</b>: adversaries store your encrypted data today and decrypt it when quantum arrives. "RSA is currently unbroken" is irrelevant for data that must stay secret 10+ years.</p>
+<p class="why">This is what turns quantum from a future problem into a governance decision you must make today (PQC migration).</p></div>
+
+<div class="card vs"><h4>Overfitting-hype vs. real quantum claims <span class="tag t-q">Quantum</span></h4>
+<p>A <b>credible</b> claim names hardware + algorithm + problem shape and admits NISQ limits. A <b>hype</b> claim promises speedups on "all workloads", "room temperature", "no error correction", or "next year".</p>
+<p class="why">Only 4 problem shapes benefit: optimisation, simulation, factoring, search.</p></div>
+</div>
+
+<h3>Blockchain</h3>
+<div class="grid wide">
+<div class="card vs"><h4>Public vs. Private/permissioned chain <span class="tag t-bc">Blockchain</span></h4>
+<p><b>Public/permissionless</b>: anyone joins, pseudonymous, transparent, slow (~7 tx/s Bitcoin vs ~1,700 Visa). <b>Private/permissioned</b>: known participants, fast (1,000s tx/s), privacy controls, KYC-compatible.</p>
+<p class="why">Why banks use private chains: control, compliance (KYC/AML), speed, confidentiality. Practice-test Q14 is exactly this.</p></div>
+
+<div class="card vs"><h4>Tamper-evident ≠ tamper-proof · Immutability ≠ correctness <span class="tag t-bc">Blockchain</span></h4>
+<p>The hash chain makes changes <b>detectable</b> (change one block → every hash after it breaks) — that's tamper-<i>evidence</i>. And a wrong entry, once confirmed, is <b>permanently wrong</b>.</p>
+<p class="why">Flagged in the recap as "a favourite short-answer trap."</p></div>
+
+<div class="card vs"><h4>Wallet vs. Node vs. Miner <span class="tag t-bc">Blockchain</span></h4>
+<p><b>Wallet</b>: holds your keys, builds &amp; signs transactions (not a node). <b>Node</b>: validates &amp; propagates (no single owner). <b>Miner</b>: a specialised node that bundles transactions into blocks and races to seal them.</p>
+<p class="why">Losing miners validate the winner's block — validation is separate from winning.</p></div>
+
+<div class="card vs"><h4>Consensus = rule-following, not voting <span class="tag t-bc">Blockchain</span></h4>
+<p>Every node <b>independently</b> validates the new block against the same rules (valid txs? correct prev hash? puzzle solved?). If valid → append. No committee, no vote. The "majority agrees" emerges from every node applying identical rules.</p>
+<p class="why">Also: consensus keeps distributed copies identical — completing the loop with hash chain (detectable) + distributed ledger (impractical to tamper).</p></div>
+
+</div>
+
+<h2 style="--accent:var(--gold)">🔢 Key numbers — memorise or look up fast</h2>
+<table>
+<tr><th>Number</th><th>What it is</th><th>Domain</th></tr>
+<tr><td class="num">87%</td><td>AI projects that never reach production (Gartner). Teacher said he will likely ask this. Why: data quality, ownership &amp; governance gaps — not algorithms. (MC range answer: 70–90%.)</td><td>Governance</td></tr>
+<tr><td class="num">80 / 20</td><td>ML workflow: 80% data work (collect, clean, label, validate), 20% modelling. First move in any case: assume the data before the algorithm.</td><td>AI/ML</td></tr>
+<tr><td class="num">70 / 15 / 15</td><td>Train / validation / test split (course slides). Your recap note said 60/15/15 — if asked, the purpose of each split matters more than the exact ratio; the course deck uses 70/15/15.</td><td>AI/ML</td></tr>
+<tr><td class="num">0.95¹⁰ ≈ 60%</td><td>Agentic error compounding: 95% accuracy per step over 10 steps → ~60% end-to-end. (Also 0.9⁷ ≈ 48% — worse than a coin flip.)</td><td>AI/ML</td></tr>
+<tr><td class="num">2017</td><td>Transformer paper "Attention Is All You Need" — the architecture behind every LLM.</td><td>AI/ML</td></tr>
+<tr><td class="num">Nov 2022</td><td>ChatGPT launch — 100M users in 60 days.</td><td>AI/ML</td></tr>
+<tr><td class="num">$50–100M</td><td>Frontier LLM training cost (GPT-4 est.); ~13T tokens; ~$0.001 per query; fine-tuning $10K–500K.</td><td>AI/ML</td></tr>
+<tr><td class="num">2018 / 2024</td><td>GDPR in force (2018) · EU AI Act adopted (2024). EU AI Act fines: up to 7% of global revenue.</td><td>Governance</td></tr>
+<tr><td class="num">High-risk (EU AI Act)</td><td>Credit scoring, hiring, healthcare, justice — requires conformity assessment, documented data quality/lineage, human oversight, explainability.</td><td>Governance</td></tr>
+<tr><td class="num">Art. 17 / Art. 22</td><td>GDPR right to erasure (Art 17) · right to explanation / human involvement in automated decisions (Art 22).</td><td>Governance</td></tr>
+<tr><td class="num">2030 / 2035</td><td>NIST: deprecate RSA by 2030, prohibit by 2035. NSA CNSA 2.0: national-security systems quantum-safe by 2027.</td><td>Quantum</td></tr>
+<tr><td class="num">5–10 years</td><td>Typical PQC migration time for a large organisation — why HNDL forces action now. NIST PQC standards published Aug 2024 (ML-KEM/Kyber, ML-DSA/Dilithium, SLH-DSA/SPHINCS+).</td><td>Quantum</td></tr>
+<tr><td class="num">~1,000 : 1</td><td>Physical qubits needed per reliable logical qubit (error-correction overhead). We are in the NISQ era — noisy, not fault-tolerant.</td><td>Quantum</td></tr>
+<tr><td class="num">6 hardware types</td><td>Superconducting (IBM/Google) · trapped ion (IonQ) · photonic (PsiQuantum) · neutral atom (QuEra) · NV diamond · topological (Microsoft). No winner yet.</td><td>Quantum</td></tr>
+<tr><td class="num">~6 blocks</td><td>Bitcoin finality (~60 min) — after that, practically irreversible. Settlement in minutes vs T+2 (48h) in traditional rails.</td><td>Blockchain</td></tr>
+<tr><td class="num">~7 vs ~1,700</td><td>Transactions/second: Bitcoin vs Visa. Why public chains don't fit high-volume retail banking.</td><td>Blockchain</td></tr>
+<tr><td class="num">3.125 BTC</td><td>Current block reward (post-2024 halving; older slides show 6.25). Miner earns reward + all transaction fees in the block — that's how people earn money on distributed ledgers.</td><td>Blockchain</td></tr>
+<tr><td class="num">51%</td><td>Control a majority of consensus power → can rewrite recent history (51% attack).</td><td>Blockchain</td></tr>
+<tr><td class="num">$440M / 45 min</td><td>Knight Capital 2012 — one un-updated server, 97 ignored error messages, no kill switch.</td><td>Cases</td></tr>
+<tr><td class="num">26,000 / 70%</td><td>Dutch childcare benefits: families wrongly accused / share who were migrants. Cabinet resigned Jan 2021.</td><td>Cases</td></tr>
+<tr><td class="num">$62M / 0</td><td>IBM Watson Oncology: spent / patients treated. Contract extended 12×.</td><td>Cases</td></tr>
+<tr><td class="num">~900 / 700+ / 13+</td><td>Post Office Horizon: prosecuted / convicted / suicides linked. 20+ years to justice.</td><td>Cases</td></tr>
+<tr><td class="num">$25.6M</td><td>Arup deepfake CFO video call — 15 transfers, discovered only by a routine follow-up call.</td><td>Cases</td></tr>
+<tr><td class="num">87M / $5B</td><td>Cambridge Analytica: profiles harvested / FTC fine. UK fine was only £500K because GDPR wasn't yet law — GDPR is the scar tissue.</td><td>Cases</td></tr>
+<tr><td class="num">CA$812</td><td>Air Canada tribunal award — tiny money, huge precedent: a company is liable for what its chatbot says.</td><td>Cases</td></tr>
+</table>
+
+<h2 style="--accent:var(--blue)">📐 Formulas</h2>
+<div class="grid">
+<div class="card"><h4>Accuracy</h4><div class="formula">(TP + TN) / (TP + TN + FP + FN)</div><p class="why">"How often right overall?" — misleading on imbalanced data (99.8% accuracy can mean 0 fraud caught if fraud is 0.2%). Always ask for the base rate.</p></div>
+<div class="card"><h4>Precision</h4><div class="formula">TP / (TP + FP)</div><p class="why">Column question — of everything I flagged, how much was real? Chase when false alarms are the expensive mistake.</p></div>
+<div class="card"><h4>Recall</h4><div class="formula">TP / (TP + FN)</div><p class="why">Row question — of everything real, how much did I catch? Chase when a miss is the disaster.</p></div>
+<div class="card"><h4>F1 score</h4><div class="formula">F1 = 2 × (P × R) / (P + R)</div><p class="why">Harmonic mean of precision &amp; recall — punishes imbalance (if either is low, F1 is low). Use as a single number when both error types matter and classes are imbalanced. E.g. P=0.56, R=0.95 → F1 = 2(0.532)/1.51 ≈ 0.70.</p></div>
+<div class="card"><h4>Error compounding</h4><div class="formula">end-to-end ≈ (per-step accuracy)^steps</div><p class="why">0.95¹⁰ ≈ 0.60 · 0.9⁷ ≈ 0.48. Why agentic workflows need checkpoints and human gates.</p></div>
+</div>
+
+<h3>The confusion matrix — plot it right, every time</h3>
+<p class="intro">Rows = <b>reality</b> (actual). Columns = <b>the model's call</b> (predicted). Worked example from the practice test: 1,000 patients, 200 truly need follow-up, model flags 340, of which 190 are correct:</p>
+<div class="mtx">
+<div class="hd"></div><div class="hd">PREDICTED: FLAG (340)</div><div class="hd">PREDICTED: CLEAR (660)</div>
+<div class="hd">ACTUAL: NEEDS (200)</div><div class="tp"><b>TP = 190</b> — caught it</div><div class="fn"><b>FN = 10</b> — missed it (the disaster)</div>
+<div class="hd">ACTUAL: FINE (800)</div><div class="fp"><b>FP = 150</b> — false alarm (the annoyance)</div><div class="tn"><b>TN = 650</b> — correctly quiet</div>
+</div>
+<p class="intro">Precision = 190/340 = <b>56%</b> (low) · Recall = 190/200 = <b>95%</b> (high) → "low precision, high recall — catches almost everything, at the cost of unnecessary referrals." That's a deliberate design choice because a missed case is worse here. <b>Your teacher's version:</b> "of 1,000 cases, 200 are real fraud" — same plot: real fraud = top row, model flags = left column, then read off the four cells.</p>
+
+<h2 style="--accent:var(--green)">⚡ One-liner definitions (rapid lookup)</h2>
+<h3>AI / ML <span class="tag t-ai">S1–S2</span></h3>
+<div class="pillbox">
+<span class="pill"><b>AI tiers:</b> Cognitive (reads) → Generative (creates) → Agentic (acts) — each built on the last</span>
+<span class="pill"><b>ML core idea:</b> classical = rules+data→answers; ML = data+answers→rules</span>
+<span class="pill"><b>Neural network:</b> layers of transformations; deep learning = many layers, increasingly abstract patterns</span>
+<span class="pill"><b>Transformer:</b> processes all words in parallel; attention lets every word weigh every other word — made LLMs trainable at scale</span>
+<span class="pill"><b>LLM mechanism:</b> next-token prediction, nothing more — no reasoning, no lookup, no plan</span>
+<span class="pill"><b>Embedding:</b> text as vectors of numbers</span>
+<span class="pill"><b>Temperature:</b> the randomness dial for next-token sampling. Low (≈0) = always pick the most probable token → predictable, repeatable output (compliance, factual Q&amp;A). High (&gt;1) = sample from less-likely tokens → creative but erratic (brainstorming). It changes <i>sampling</i>, not knowledge — high temperature isn't smarter, just riskier; low temperature can still hallucinate, just consistently</span>
+<span class="pill"><b>Training cutoff:</b> knowledge frozen at training time</span>
+<span class="pill"><b>NLP pipeline:</b> tokenise → POS-tag → NER + coreference → sentiment → synthesis</span>
+<span class="pill"><b>NER:</b> extract entities (Apple=ORG, Powell=PERSON, $90B=AMOUNT)</span>
+<span class="pill"><b>Agentic loop:</b> Plan → Act → Observe → Adjust (most case failures break at Observe)</span>
+<span class="pill"><b>Human-in-the-loop:</b> a design choice — put the human where errors are irreversible, costly, or regulated</span>
+<span class="pill"><b>Model monitoring:</b> training-time accuracy expires — track live performance, set alert thresholds, retrain by policy</span>
+<span class="pill"><b>Feature engineering:</b> reshaping raw data into signals a model can use</span>
+<span class="pill"><b>Calibration:</b> whether stated confidence matches actual hit rate (≠ accuracy)</span>
+<span class="pill"><b>Cognitive AI:</b> the machine reads — classifies/extracts/predicts from existing data (fraud detection, credit scoring, contract analysis); still ~80% of production AI</span>
+<span class="pill"><b>Generative AI:</b> the machine imagines — creates new text/images/code from learned patterns; prompt in, content out</span>
+<span class="pill"><b>Agentic AI:</b> the machine decides — pursues a goal autonomously with tools; goal in, action out; built on GenAI (2023+)</span>
+<span class="pill"><b>Supervised learning:</b> learn from labelled input/output pairs — fraud, credit scoring, forecasting; most business AI today</span>
+<span class="pill"><b>Unsupervised learning:</b> find structure without labels — segmentation, clustering, topic modelling</span>
+<span class="pill"><b>Reinforcement learning:</b> trial &amp; error with rewards/penalties ("slaps itself on the wrist") — trading bots; powers the agentic adjust step</span>
+<span class="pill"><b>Classification vs regression:</b> predict a category (fraud/not) vs a number (price, risk %)</span>
+<span class="pill"><b>Clustering:</b> group similar items without labels · <b>Anomaly detection:</b> flag what doesn't fit the learned pattern</span>
+<span class="pill"><b>Deep learning:</b> many stacked layers, each learning more abstract patterns — the engine under all three tiers</span>
+<span class="pill"><b>Overfitting:</b> memorised the training set (chef/one cookbook) — high variance · <b>Underfitting:</b> never learned the pattern — high bias</span>
+<span class="pill"><b>Distribution shift:</b> the world changes after training — model was right at launch, wrong now; degrades silently while confidence stays high. Umbrella for data drift + concept drift</span>
+<span class="pill"><b>Data drift:</b> inputs change after deployment · <b>Concept drift:</b> the input→outcome relationship changes (post-recession "creditworthy")</span>
+<span class="pill"><b>Confidence trap:</b> a drifted model still reports high confidence — high confidence ≠ high accuracy</span>
+<span class="pill"><b>Cost asymmetry:</b> which error costs more — the input to every threshold decision (state the ratio if given)</span>
+<span class="pill"><b>Type I vs Type II error:</b> Type I = false positive (false alarm) · Type II = false negative (missed case). Memory hook: Type I = "cried wolf first"; Type II = "the second, silent mistake"</span>
+<span class="pill"><b>F1 score:</b> harmonic mean of precision &amp; recall, 2PR/(P+R) — punishes imbalance; use on imbalanced classes</span>
+<span class="pill"><b>Hallucination:</b> fluent, confident, wrong — direct consequence of next-token prediction; mitigated (not eliminated) by RAG + human check</span>
+<span class="pill"><b>RAG:</b> retrieve current documents, ground the answer in them — fixes training cutoff, reduces hallucination, cheap per query</span>
+<span class="pill"><b>Fine-tuning:</b> bake domain behaviour/style into the weights ($10K–500K); knowledge frozen at fine-tune time</span>
+<span class="pill"><b>Parameters vs tokens:</b> what the model learned (GPT-3: ~175B params) vs what it reads/was trained on (~13T tokens)</span>
+<span class="pill"><b>Error compounding:</b> (per-step accuracy)^steps — 0.95¹⁰ ≈ 60%; keep agentic chains short, add checkpoints</span>
+<span class="pill"><b>Stateless vs stateful:</b> GenAI = single turn, no memory of actions; agents maintain state across steps — why their failures differ</span>
+<span class="pill"><b>POS tagging:</b> grammatical role per word · <b>Dependency parsing:</b> subject–verb–object relationships for meaning extraction</span>
+<span class="pill"><b>Coreference resolution:</b> "Its" → Apple · <b>Sentiment analysis:</b> positive/negative scoring — news → trading signals</span>
+<span class="pill"><b>Tokenisation (NLP):</b> split text into tokens — step 1 of the pipeline (≠ blockchain tokenisation!)</span>
+</div>
+<h3>Data Governance <span class="tag t-gov">S3</span></h3>
+<div class="pillbox">
+<span class="pill"><b>Purpose limitation:</b> data used only for its stated collection purpose — new purpose needs a new legal basis (the most-tested governance concept: "collected for X, used for Y")</span>
+<span class="pill"><b>Privacy by design:</b> protections built in from the start, not bolted on</span>
+<span class="pill"><b>Data minimisation:</b> collect only what the purpose requires</span>
+<span class="pill"><b>Data lineage:</b> full trail from source → transformations → model output; required for audit &amp; explainability</span>
+<span class="pill"><b>Data catalogue:</b> what data exists · <b>Master data:</b> the single source of truth · <b>Stewardship:</b> day-to-day quality</span>
+<span class="pill"><b>Classification tiers:</b> T1 Restricted · T2 Confidential · T3 Internal · T4 Public — tier = impact if disclosed/modified/lost</span>
+<span class="pill"><b>Five warning signs:</b> no ownership · no lineage · no single truth · no quality gates · no documentation</span>
+<span class="pill"><b>DPIA:</b> documented risk assessment required before high-risk processing</span>
+<span class="pill"><b>Consent decay:</b> consent for one purpose does not silently transfer to a new one</span>
+<span class="pill"><b>Accountability principle:</b> you must be able to demonstrate compliance, not just claim it</span>
+<span class="pill"><b>Explainability:</b> being able to say why the model decided — mandatory for high-risk uses; LLMs can't provide it per-decision (the regulatory gap)</span>
+<span class="pill"><b>Automation bias:</b> humans rubber-stamp the machine — oversight becomes performative</span>
+<span class="pill"><b>Model drift:</b> silent decay post-deployment; governance response = thresholds + alerts + policy-driven retraining</span>
+<span class="pill"><b>Machine unlearning:</b> emerging: remove one data point's influence without full retrain — not production-ready</span>
+<span class="pill"><b>Differential privacy:</b> limit any individual record's influence on the model (an erasure-adjacent mitigation)</span>
+<span class="pill"><b>Data brokers:</b> firms that collect and resell personal data — hard to get deleted; services like Incogni / DeleteMe send erasure requests to every broker on your behalf (recap-session example of Art. 17 in practice)</span>
+<span class="pill"><b>Data governance:</b> the roles, rules and quality gates that make AI deployable — infrastructure, not bureaucracy</span>
+<span class="pill"><b>Data quality:</b> fit for purpose — the #1 root cause of model failure; fails via bias, staleness, volume, labelling</span>
+<span class="pill"><b>Quality gate:</b> an automated check data (or a deployment) must pass before use — its absence recurs in every W2 pipeline case</span>
+<span class="pill"><b>Governance chain:</b> Ownership → Governance → Stewardship → Metadata → Master data</span>
+<span class="pill"><b>GDPR (core):</b> accuracy, purpose limitation, data minimisation, privacy by design; applies to any EU-resident data, anywhere in the world</span>
+<span class="pill"><b>GDPR Art. 17:</b> right to erasure — trivial in a database, unresolved in model weights, impossible on-chain</span>
+<span class="pill"><b>GDPR Art. 22:</b> right to explanation + human involvement in consequential automated decisions</span>
+<span class="pill"><b>EU AI Act:</b> risk-tiered (2024); high-risk = credit, hiring, healthcare, justice → conformity assessment, lineage, human oversight, explainability; fines up to 7% global revenue</span>
+<span class="pill"><b>Regulatory patchwork:</b> EU binding &amp; rights-based · US sectoral &amp; voluntary · UK principles-based · China targeted &amp; sovereignty-first</span>
+<span class="pill"><b>Regulations as scar tissue:</b> every rule traces back to a specific harm — Cambridge Analytica → GDPR</span>
+<span class="pill"><b>Basel IV / BCBS 239:</b> banks must evidence data quality &amp; lineage in all risk models — same demands, different regulator</span>
+<span class="pill"><b>Erasure options (know all!):</b> ① delete + retrain ② differential privacy/partitioning ③ machine unlearning (emerging) ④ document complexity + assess risk ⑤ prevention by design (legal basis before training)</span>
+<span class="pill"><b>Traditional-ML vs GenAI governance:</b> traceable/explainable/reproducible vs web-corpus/opaque/stochastic — the regulatory gap</span>
+<span class="pill"><b>Output monitoring &amp; prompt governance:</b> the two NEW GenAI requirements — live output sampling + who may prompt, what's logged</span>
+<span class="pill"><b>Model card:</b> standard documentation of a model's behaviour, limits, and accountable owner</span>
+<span class="pill"><b>Data mesh:</b> distributed, domain-owned data architecture (vs central team)</span>
+</div>
+<h3>Quantum <span class="tag t-q">S4</span></h3>
+<div class="pillbox">
+<span class="pill"><b>Qubit:</b> the quantum bit — can hold more than just 0 or 1</span>
+<span class="pill"><b>Superposition:</b> multiple states at once until measured (measurement collapses it)</span>
+<span class="pill"><b>Entanglement:</b> linked qubits — one's state instantly fixes the other; hardware must bring qubits close enough to interact to create it; it's what lets qubits work together as one system (computational power scales)</span>
+<span class="pill"><b>Interference:</b> wrong answers cancel, right answers reinforce — how quantum algorithms compute</span>
+<span class="pill"><b>Decoherence:</b> qubit loses its quantum state (heat, vibration, EM noise) — why hardware runs near absolute zero</span>
+<span class="pill"><b>NISQ era:</b> noisy intermediate-scale quantum — powerful but error-prone, not fault-tolerant</span>
+<span class="pill"><b>Fault-tolerant quantum computing:</b> actively corrects errors via redundant physical qubits, enabling sustained reliable computation — not yet achieved at scale; the threshold Shor-scale attacks wait for</span>
+<span class="pill"><b>Quantum advantage:</b> the (contested) point where quantum beats classical on a real task</span>
+<span class="pill"><b>Quantum volume / qubit count:</b> today's hardware-maturity metrics — still small-scale</span>
+<span class="pill"><b>Problem shapes that benefit:</b> combinatorial optimisation · simulation · factoring · search — everything else: classical wins</span>
+<span class="pill"><b>Crypto-agility:</b> design so encryption algorithms can be swapped without a rebuild</span>
+<span class="pill"><b>PQC migration:</b> inventory → prioritise long-lived secrets → adopt NIST standards → migrate</span>
+<span class="pill"><b>Bloch sphere:</b> geometric picture of all states of a single qubit — the demo used in S4</span>
+<span class="pill"><b>Measurement / collapse:</b> observing a qubit forces it to a definite 0 or 1 — ends the superposition</span>
+<span class="pill"><b>Grover's algorithm:</b> quadratic search speedup — √N checks instead of N/2 (databases, fraud-pattern search)</span>
+<span class="pill"><b>Shor's algorithm:</b> exponential factoring speedup — breaks RSA and ECC/ECDSA once hardware is large enough</span>
+<span class="pill"><b>QAOA:</b> approximate optimisation on NISQ hardware — portfolio &amp; routing experiments</span>
+<span class="pill"><b>VQE:</b> variational eigensolver — chemistry &amp; materials simulation</span>
+<span class="pill"><b>Six hardware approaches:</b> superconducting (IBM/Google) · trapped ion (IonQ) · photonic (PsiQuantum) · neutral atom (QuEra) · NV diamond · topological (Microsoft) — no winner yet</span>
+<span class="pill"><b>Error correction overhead:</b> ~1,000 physical qubits per reliable logical qubit — the core NISQ bottleneck</span>
+<span class="pill"><b>NIST PQC standards (Aug 2024):</b> ML-KEM (Kyber, key exchange) · ML-DSA (Dilithium, signatures) · SLH-DSA (SPHINCS+, hash-based backup)</span>
+<span class="pill"><b>Deadlines:</b> NIST — deprecate RSA 2030, prohibit 2035 · NSA CNSA 2.0 — quantum-safe national-security systems by 2027</span>
+<span class="pill"><b>Qubit-requirement drop:</b> to break RSA-2048: 20M qubits (2019) → &lt;1M (2025) → ~100K (2026 estimates) — timelines shorten</span>
+<span class="pill"><b>Finance applications (all experimental):</b> portfolio optimisation, Monte Carlo derivative pricing (amplitude estimation), risk simulation, fraud search — none beats classical at commercial scale yet</span>
+<span class="pill"><b>Timeline reality:</b> "useful quantum in 5 years" was promised in 2015, 2020 AND 2025 — watch and track, don't bet the strategy; DO start crypto migration</span>
+</div>
+<h3>Blockchain <span class="tag t-bc">S5</span></h3>
+<div class="pillbox">
+<span class="pill"><b>Trust problem solved:</b> removes single point of failure / trusted intermediary — you're not exposed if the bank fails</span>
+<span class="pill"><b>Hash:</b> mathematical fingerprint of a block's contents — change one byte, hash completely changes</span>
+<span class="pill"><b>Prev hash:</b> each block locks in the previous block's hash — the chaining that makes tampering visible</span>
+<span class="pill"><b>Nonce:</b> the number miners brute-force until the block hash starts with enough zeros (proof-of-work)</span>
+<span class="pill"><b>Mining:</b> the race to seal the block — expensive to do, trivial to verify; losers validate the winner's block</span>
+<span class="pill"><b>Earning money:</b> winning miner gets block reward (new coin) + all transaction fees in the block</span>
+<span class="pill"><b>Transaction signing:</b> the sender's wallet signs with the private key at creation (proves authorisation); it is "signed off" by the network after validation → block inclusion → consensus → finality (~6 blocks)</span>
+<span class="pill"><b>Mempool:</b> waiting room for valid unconfirmed transactions — higher fee, earlier pickup</span>
+<span class="pill"><b>Double-spend:</b> spending the same funds twice — prevented by validation + consensus</span>
+<span class="pill"><b>Smart contract:</b> self-executing code on chain — only as correct as its logic ("code is law, including the bugs")</span>
+<span class="pill"><b>Oracle problem:</b> chains can't see the outside world; oracles feed data in and become a new trust bottleneck</span>
+<span class="pill"><b>Tokenisation:</b> a real asset represented as a tradeable digital unit on-chain (BlackRock BUIDL; $10–16T projected by 2030)</span>
+<span class="pill"><b>CBDC:</b> central bank digital currency (digital euro) — most use permissioned chains</span>
+<span class="pill"><b>Finality:</b> after ~6 blocks reversal is impractical — no chargebacks</span>
+<span class="pill"><b>Block anatomy:</b> header (prev hash · nonce · timestamp) + bundled transactions + the block's own hash</span>
+<span class="pill"><b>Coinbase transaction:</b> the miner's self-declared reward transaction — only valid if they win the race</span>
+<span class="pill"><b>Gossip protocol:</b> a signed transaction spreads node-to-node across the whole network in seconds — no single path</span>
+<span class="pill"><b>T+2 settlement:</b> traditional rails lock funds ~48h across clearinghouses; counterparty risk lives in the gap (Lehman); blockchain: minutes</span>
+<span class="pill"><b>Block reward:</b> newly created coin (3.125 BTC post-2024) + all fees → the winning miner; how supply enters circulation — no central bank</span>
+<span class="pill"><b>51% attack:</b> control a majority of consensus power → rewrite recent history — the limit of the incentive design</span>
+<span class="pill"><b>Consortium model:</b> shared governance across competitors (Canton Network, SWIFT-style) — must be NEUTRAL or it dies (TradeLens)</span>
+<span class="pill"><b>DAG (Hedera):</b> no blocks — transactions validate each other directly; governed by a corporate council</span>
+<span class="pill"><b>Public chain examples:</b> Bitcoin ('09, store of value) · Ethereum ('15, smart contracts/DeFi/BUIDL) · Solana ('20, ~65K tx/s)</span>
+<span class="pill"><b>Private chain examples:</b> Hyperledger Fabric (trade finance) · R3 Corda (DTCC, HSBC bonds) · Quorum/JPM Coin ($1B+ daily)</span>
+<span class="pill"><b>Failed projects:</b> TradeLens, ASX CHESS, We.Trade — broad consortia, rival-controlled, unclear governance</span>
+<span class="pill"><b>Worked:</b> JPM Coin, HSBC FX Everywhere ($2.5T netted), BlackRock BUIDL, Contour — narrow scope, clear gain, controlled participants</span>
+<span class="pill"><b>Programmable money (CBDC):</b> conditional payments, automatic tax, expiring stimulus — the monetary system as software</span>
+<span class="pill"><b>Proof of work:</b> costly to produce, trivial to verify — converts electricity + self-interest into network security</span>
+</div>
+<h3>Cross-domain <span class="tag t-x">S6</span></h3>
+<div class="pillbox">
+<span class="pill"><b>AI ↔ Governance:</b> lineage, explainability, audit trails make AI deployable</span>
+<span class="pill"><b>Governance ↔ Quantum:</b> PQC migration is a governance decision made today, not a technical event in 2035</span>
+<span class="pill"><b>Quantum ↔ Blockchain:</b> ECDSA signatures (and SHA-256 assumptions) are quantum-vulnerable — Shor's breaks the wallets; migrating a decentralised chain needs consensus of thousands of nodes (uniquely hard)</span>
+<span class="pill"><b>AI ↔ Blockchain:</b> agentic AI + smart contracts = machine-to-machine transactions with no accountability framework (teacher's favourite — see Short Answer tab)</span>
+<span class="pill"><b>GDPR erasure ↔ immutability:</b> the chain structurally cannot un-write a block</span>
+<span class="pill"><b>GDPR erasure ↔ model weights:</b> deleting a database row is easy; removing a person from trained weights has no clean answer</span>
+<span class="pill"><b>Precision/recall ↔ discrimination:</b> error rates clustered by demographic → EU AI Act high-risk exposure</span>
+<span class="pill"><b>GenAI ↔ GDPR traceability gap:</b> web-scale corpus of unclear provenance, stochastic outputs, no per-decision explanation — regulation assumes all three</span>
+<span class="pill"><b>Quantum ↔ AI security:</b> HNDL also applies to encrypted training data and model weights — an AI governance framework whose encryption layer breaks is itself broken</span>
+<span class="pill"><b>Blockchain ↔ Governance:</b> immutable lineage by design (good for audit) — but erasure impossible (bad for Art. 17); both in one sentence = synthesis</span>
+<span class="pill"><b>The dependency chain:</b> S1 measurement vocabulary → S2 new failure modes → S3 trust layer → S4 threat &amp; horizon → S5 distributed trust — each session answers the previous one's gaps</span>
+</div>
+</section>
+
+<!-- ==================== PANE 2: SHORT ANSWER ==================== -->
+<section class="pane" id="p2">
+<div class="intro"><b>How to use in the exam:</b> each card is a ready model answer. The white text is a solid tier-3/4 core (correct + reasoning). The green <b>⤴ upgrade</b> box is the sentence that lifts it toward 10–12: a case anchor or a cross-domain connection. Copy the structure, adapt to the question's wording — always answer <i>what they actually asked</i> first.</div>
+
+<div class="callout"><b>The depth ladder (from the Exam Approach page):</b> ① answer the real question → ② get the terms right → ③ add the <i>why</i> (reasoning, not just conclusion) → ④ add a concrete case showing the trade-off → ⑤ connect a second domain. Steps ④ and ⑤ are where 7 becomes 10–12.</div>
+
+<h2 style="--accent:var(--blue)">AI / ML — how AI learns</h2>
+<div class="grid wide">
+<div class="card answer"><h4>What is the train/validation/test split, and why does it matter?</h4>
+<p>The data is split (course slides: 70% train / 15% validation / 15% test). The model <b>learns</b> on the training set, <b>hyperparameters are tuned</b> on the validation set, and the <b>test set is touched once</b>, at the end, to estimate real-world performance. Why it matters: if you evaluate on data the model has seen, you measure <i>memorisation, not understanding</i> — you get a flattering score that collapses in production (overfitting goes undetected).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "An undertrained transformer sits at the other extreme: it hasn't yet learned the underlying patterns at all, so it performs poorly even on training data (high bias/underfitting), producing generic or incoherent output. Training curves on train vs validation data tell you which side of the bias–variance trade-off you're on." + governance angle: the held-out test set is your only honest evidence for regulators.</div></div>
+
+<div class="card answer"><h4>Explain overfitting.</h4>
+<p>Overfitting is when a model learns the training data too specifically — noise and coincidences included — instead of the general pattern. The course analogy: <b>a chef who memorises one cookbook perfectly</b> — flawless on any dish from that book, lost with a new ingredient. He learned the book, not how to cook. Symptom: near-perfect training accuracy, poor performance on new data <i>from the same world</i>.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> distinguish from distribution shift (world changed) and connect: "an overfit model is ungovernable in production — it will fail unpredictably when the world moves, so model monitoring is the governance response." Bias–variance framing: overfitting = high variance; underfitting = high bias.</div></div>
+
+<div class="card answer"><h4>Explain distribution shift and its implications.</h4>
+<p>Distribution shift is when the world changes after training. Two forms: <b>data drift</b> — the inputs change (2022 fraud patterns → 2026 patterns); <b>concept drift</b> — the relationship between inputs and outcomes changes (what "creditworthy" means after a recession). The implication: accuracy degrades <b>silently</b>. The model doesn't know it drifted — it keeps producing high-confidence outputs because it's still internally consistent. <b>High confidence ≠ high accuracy.</b></p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The governance response is drift monitoring: performance thresholds, automated alerts, policy-driven retraining — most organisations have none and find out when a decision fails publicly. The Lucas Critique is the extreme case: deploying the model changes the very behaviour it was trained to predict (Dutch benefits enforcement changed applicant behaviour)."</div></div>
+
+<div class="card answer"><h4>Was it the model or the data? (the 80/20 question)</h4>
+<p>Assume the data first. 80% of ML work is data collection, cleaning, labelling and validation; only 20% is modelling — and the #1 root cause of model failure is poor data quality, not algorithm choice. Checklist: were labels themselves valid (label bias)? was the data representative? has the world changed since collection (drift)? were there quality gates at ingestion? Only after ruling those out, look at model complexity (over/underfitting) and deployment (monitoring, verification).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Amazon's hiring model worked exactly as designed — learning from the data it was given. That was exactly the problem: the labels ('hired/not hired') encoded a decade of bias. Its failure was decided before a line of model code was written."</div></div>
+
+<div class="card answer"><h4>Choose precision vs recall for scenario X (template)</h4>
+<p>Step 1 — define both: precision = TP/(TP+FP), of my flags how many were right; recall = TP/(TP+FN), of the real cases how many I caught. Step 2 — name the two errors <i>in this scenario</i> and ask: <b>which mistake is the disaster?</b> If the miss (FN) is the disaster → chase recall, tolerate noise (wildfire evacuation, cancer screening, data-centre overheat). If the false alarm (FP) is the expensive/dangerous one → chase precision, act only when sure (small-business spam filter — a real customer email lost is the disaster; AML when review capacity is 40 cases/day but you flag 200).</p>
+<div class="upgrade"><b>⤴ Upgrade (this exact upgrade is the teacher's tier-5 example):</b> "The threshold is not just a modelling choice — it's a governance choice. Precision failures (wrongly denied customers) can cluster by demographic → discrimination risk → EU AI Act high-risk exposure for credit scoring. A model tuned only to the bank's loss function is optimising the wrong objective — Goodhart's Law in a credit context." Also note capacity: recall is pointless if the review team can't process the flags.</div></div>
+
+<div class="card answer"><h4>What is the F1 score and when do you use it?</h4>
+<p>F1 = 2·(P·R)/(P+R) — the <b>harmonic mean</b> of precision and recall. Unlike a simple average, it punishes imbalance: if either P or R is near zero, F1 is near zero. Use it as a single summary metric when both error types matter and classes are imbalanced (where plain accuracy is misleading). Example: P=56%, R=95% → F1 ≈ 70%.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "F1 weights precision and recall equally — but business costs rarely are equal. If FN costs 10× FP, report precision and recall separately and set the threshold from the cost asymmetry, rather than optimising F1 blindly — otherwise the metric becomes the target (Goodhart)."</div></div>
+
+<div class="card answer"><h4>Explain the transformer architecture / attention.</h4>
+<p>Before 2017, models processed text sequentially — by the time they reached the end of a sentence, early context was fading, and training couldn't parallelise. The transformer ("Attention Is All You Need", 2017) processes <b>all words simultaneously</b>, and <b>attention</b> lets every word weigh its relationship to every other word — "sharply" knows it modifies "fell" which describes "market". Parallelism made billion-parameter models trainable on GPUs. Every LLM — GPT, Claude, Gemini — is a transformer.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Note what the architecture doesn't change: the model still only predicts the next most probable token. Scale bought fluency, not truth — which is why hallucination is a property, not a bug." (NB: if the teacher loosely says "a transformer" meaning the whole ML pipeline/split — answer the concept he's pointing at: the trained model and its train/val/test discipline.)</div></div>
+
+<div class="card answer"><h4>How does an LLM actually work — and what follows from that?</h4>
+<p>An LLM is trained on internet-scale text to predict the next token. At inference it generates one token at a time, each the most probable continuation given everything before, until an end-of-sequence token. No reasoning, no understanding, no database lookup — only very good prediction. Three consequences: <b>hallucination</b> (plausible ≠ correct — it can't tell the difference), <b>no reliable arithmetic</b> (numbers are tokens), <b>no current facts</b> (training cutoff).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Mitigations map to causes: RAG grounds answers in retrieved current documents (fixes cutoff + reduces hallucination), fine-tuning bakes in domain behaviour, human review catches what both miss. Air Canada shows the liability: its chatbot generated the most plausible policy, not the real one, and the tribunal held the company responsible for everything on its website."</div></div>
+
+<div class="card answer"><h4>Generative vs Agentic AI — and why agentic risk is different.</h4>
+<p>Generative AI answers: you prompt, it produces output, a human evaluates it — single turn, stateless, no action in the world ("a brain in a jar"). Agentic AI acts: the same LLM wrapped in a <b>Plan → Act → Observe → Adjust</b> loop with tool access (APIs, search, systems) — multi-step, stateful, takes real actions. The risk changes category: errors <b>compound</b> (0.95¹⁰ ≈ 60% end-to-end), a misread goal cascades, and there's an accountability gap — who owns an autonomous agent's action?</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Design answer: autonomy is a dial, not a switch — place a human in the loop wherever an action is irreversible, costly, or regulated (a credit decision is legally high-risk under the EU AI Act). Cruise shows where the loop breaks: the vehicle observed a collision, braked, then ran its pullover protocol without re-observing — the Observe step failed."</div></div>
+
+<div class="card answer"><h4>What is RAG and what problem does it solve?</h4>
+<p>Retrieval-Augmented Generation: before answering, a retrieval system fetches current/authoritative documents, and the LLM synthesises an answer <b>grounded in them</b>. It solves the training-cutoff problem (knowledge stays current without retraining) and reduces hallucination by anchoring generation to a source of record. Cheap per query vs fine-tuning ($10K–500K) or retraining ($50–100M).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Air Canada's chatbot had no retrieval layer — grounded in the actual bereavement policy it would likely have answered correctly. Most enterprise deployments combine both: fine-tune for tone/behaviour, RAG for facts. RAG mitigates but does not eliminate — a validation gate against the source is still needed."</div></div>
+</div>
+
+<h2 style="--accent:var(--green)">Data Governance</h2>
+<div class="grid wide">
+<div class="card answer"><h4>Why do 87% of AI projects never reach production?</h4>
+<p>Because the failure is usually in the data and the organisation, not the algorithm: unclear <b>ownership</b> (nobody accountable), poor <b>data quality</b> (the #1 root cause), no <b>lineage</b> (can't audit or explain), no <b>quality gates</b>, and no <b>documentation</b> — the five warning signs. 80% of a data scientist's time goes to cleaning data. Governance is not bureaucracy; it's the infrastructure that turns the 87% into survivors.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Ownership is the foundation: business owns (accountable for accuracy, purpose, compliance), IT manages (infrastructure, access), stewards monitor daily quality. Every governance failure in the Week 2 cases traces back to unclear ownership — and regulation (EU AI Act) now assumes this infrastructure already exists."</div></div>
+
+<div class="card answer"><h4>Purpose limitation (the most-tested governance concept)</h4>
+<p>Under GDPR, personal data may only be used for the specific purpose stated when it was collected. Using it for a <b>new purpose requires a new legal basis</b> — typically fresh consent. The exam shape: "data collected for X, used for Y." Related: <b>consent decay</b> — consent given for one purpose does not silently transfer to a new one; and <b>data minimisation</b> — collect only what the purpose requires.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Cambridge Analytica is the canonical case: data collected for academic personality research, used for political micro-targeting of 87M people. Facebook's 'we asked them to delete it' was not a governance process — no audit, no verification, no notification. GDPR (drafted 2016) is the scar tissue of exactly this case. Tier-5 move: compliance ≠ fairness — even legally-consented location data can proxy for income and produce discriminatory pricing → EU AI Act territory."</div></div>
+
+<div class="card answer"><h4>Right to erasure (GDPR Art. 17) vs a trained model</h4>
+<p>A person can demand deletion of their data. For a database: delete the row — done. For a model trained on that row: the data is <b>baked into the weights</b>; you cannot remove one person's contribution without retraining, and retraining is expensive. Genuine options (practice-test answer): ① delete source data and retrain; ② differential privacy / partitioning to limit an individual record's influence; ③ machine unlearning (emerging, not production-ready); ④ document why full erasure is technically complex and assess the risk — plus the only scalable answer: <b>prevention by design</b> — verify a legal basis for every data point before training.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Same collision, second domain: blockchain immutability. A hash chain structurally cannot un-write a block — the tamper-evidence that makes it trustworthy is exactly what blocks a court-ordered or GDPR deletion (collision type A: permanence vs the right to change)."</div></div>
+
+<div class="card answer"><h4>EU AI Act — high-risk classification</h4>
+<p>The EU AI Act (2024) regulates by risk tier. <b>High-risk</b> systems — those affecting people's lives: <b>credit scoring, hiring, healthcare, justice</b> — require conformity assessment before deployment: documented training-data quality and lineage, human oversight, explainability, error-rate evidence. Fines up to 7% of global revenue. It turns a modelling choice (e.g. a threshold) into a legal one.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The Act essentially asks: what are your FP/FN rates, and who is harmed by them? — the confusion matrix is the raw material of AI regulation. Gap: it assumes traceable, explainable, reproducible systems; GenAI is stochastic, web-trained and unexplainable per-decision — the regulatory gap the course keeps returning to."</div></div>
+
+<div class="card answer"><h4>Explainability — why "the AI can't explain itself" is a regulatory problem</h4>
+<p>For high-risk automated decisions, GDPR Art. 22 and the EU AI Act require organisations to explain how a decision was made and keep meaningful human oversight. Traditional ML can deliver this (feature importance, SHAP, deterministic audit trails). LLMs cannot: outputs emerge from billions of parameters, the same prompt gives different answers, and no one can trace why a specific output was produced. Regulation assumes capabilities GenAI doesn't have — projects get blocked by compliance, not technology.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Responses organisations try: tiered risk frameworks (GenAI gets output monitoring + human review + use-case restrictions instead of full explainability), proxy explainability tools, separate governance tracks. Dutch benefits shows the human cost of no explainability: 26,000 families with no explanation and no route to contest."</div></div>
+
+<div class="card answer"><h4>Model drift &amp; monitoring (governance version)</h4>
+<p>A model accurate at deployment degrades silently: data drift, concept drift, and degradation as unseen edge cases accumulate. Because the model still reports high confidence, nobody notices until a decision causes visible harm. Governance response: set performance thresholds/SLAs, automated alerts, and <b>policy-driven retraining triggers</b> — not ad hoc. Most organisations have no drift monitoring.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Connect to deployment reality: 'the model was checked at launch' is an activity proxy — verification must be continuous. Insurance-pricing practice question: inputs unchanged but input→outcome relationships shifted because a competitor changed customer behaviour → concept drift → retrain on recent data."</div></div>
+
+<div class="card answer"><h4>Who owns data inside an organisation?</h4>
+<p><b>Business owns</b> — accountable for accuracy, purpose and compliance (the accountable party). <b>IT manages</b> — storage, access, security, infrastructure. <b>Stewards monitor</b> — day-to-day quality, metadata, policy enforcement. In practice ownership often sits with whoever built the system, quality dies when they leave, and regulators get no answer — which is why "who is responsible for this data?" is the first governance question.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Controller vs processor (GDPR): the controller decides why/how data is used and carries the accountability; the processor handles it on instruction. And the accountability principle: you must be able to <i>demonstrate</i> compliance — documentation, DPIAs, audit trails — not just claim it."</div></div>
+</div>
+
+<h2 style="--accent:var(--cyan)">Quantum</h2>
+<div class="grid wide">
+<div class="card answer"><h4>Qubit, superposition, entanglement, interference (the four-parter)</h4>
+<p>A <b>qubit</b> is the quantum unit of information — unlike a classical bit locked to 0 or 1, it can hold more than one state. <b>Superposition</b>: a qubit exists in multiple states (0 AND 1) simultaneously until measured — measurement collapses it to a definite value. <b>Entanglement</b>: two qubits linked into one shared state, so measuring one instantly fixes the other, no matter the distance; hardware must bring qubits close enough to interact to create the link — entanglement is what lets many qubits act as one computational system. <b>Interference</b>: quantum algorithms choreograph the amplitudes so wrong answers cancel out and correct answers reinforce — that is how a quantum computer actually computes an answer rather than just holding many possibilities.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Interference is the exam favourite: both Grover's and Shor's algorithms rely on it. And the honest caveat scores points: qubits are fragile (decoherence — heat/vibration destroys the state), which is why hardware runs near absolute zero and we're still in the NISQ era, ~1,000 physical qubits per logical qubit."</div></div>
+
+<div class="card answer"><h4>Grover's and Shor's algorithms</h4>
+<p><b>Grover's</b>: quadratic speedup for unstructured search — ~√N checks instead of N/2. Applications: database/pattern search, fraud-pattern detection. <b>Shor's</b>: exponential speedup for factoring large numbers — which is precisely the hard problem RSA and ECC/ECDSA encryption rely on. A large-enough fault-tolerant quantum computer running Shor's breaks most of today's internet, banking and signature encryption.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Match hardware → algorithm → problem shape: if a quantum claim can't name all three specifically, it's probably hype. Only four problem shapes benefit at all: combinatorial optimisation, quantum simulation, factoring, search. For everything else classical wins — quantum won't run Excel faster."</div></div>
+
+<div class="card answer"><h4>Harvest Now, Decrypt Later — why act today?</h4>
+<p>An adversary intercepts and <b>stores</b> encrypted data today, then decrypts it years from now once quantum computers can run Shor's at scale. The vulnerability exists NOW even though the capability arrives LATER: anything that must stay secret longer than the quantum timeline (mortgage contracts, health records, state secrets, pension custody records) is already at risk the moment it's transmitted under RSA/ECC. "It's not broken yet" is therefore not a safety argument for long-lived data.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "This turns quantum into a present-day governance decision: NIST published PQC standards in Aug 2024 (ML-KEM, ML-DSA, SLH-DSA), deprecates RSA by 2030, prohibits by 2035; migration takes 5–10 years for a large organisation — so the window to start is now. Migration sequence: inventory → prioritise long-lived secrets → adopt standards → migrate. Collision type C: present security vs a future-dated break."</div></div>
+
+<div class="card answer"><h4>The future of quantum (timelines &amp; the honest take)</h4>
+<p>We're in the <b>NISQ era</b>: noisy, small-scale, no fault tolerance; error correction needs ~1,000 physical qubits per logical qubit; timelines keep slipping (advantage promised "in 5 years" in 2015, 2020, and 2025). Experts diverge on Shor-scale machines: 5–20 years; ~50% of experts say by 2035; the qubit requirement to break RSA-2048 dropped from 20M (2019) to ~100K–1M (2025–26), which shortens timelines. For most businesses: watch and track, don't bet the strategy — but <b>do</b> start the crypto migration (that's the urgent part).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "JPMorgan's quantum initiative is the governance near-miss: real $100M+ investment, real research — but 'quantum advantage in 5–10 years' quietly became 'monitoring the landscape.' They measured papers published, not competitive advantage: measurable ≠ meaningful, no feedback loop to kill the narrative."</div></div>
+</div>
+
+<h2 style="--accent:var(--amber)">Blockchain</h2>
+<div class="grid wide">
+<div class="card answer"><h4>Explain the trust mechanism (the three layers)</h4>
+<p>Blockchain replaces a trusted intermediary with three interlocking layers. ① <b>Hash chain</b>: every block contains the previous block's hash — change any past transaction and every subsequent hash breaks, so tampering is <i>detectable</i>. ② <b>Distributed ledger</b>: thousands of nodes hold identical copies — no single point of failure, so tampering is <i>impractical</i> (you'd have to change most copies at once). ③ <b>Consensus</b>: every node independently validates each new block against the same rules — no vote, no committee — so all copies stay <i>identical</i>. Built to remove dependence on banks: no single point of failure, no trusted intermediary, and a bank run can't take your record down.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Precision matters: it's tamper-EVIDENT, not tamper-proof — and immutability ≠ correctness: a wrong entry, once confirmed, is permanently wrong. That structural permanence is also the GDPR-erasure collision (type A)."</div></div>
+
+<div class="card answer"><h4>What is mining, who wins, and how do people earn money?</h4>
+<p>Miners each assemble a candidate block from the mempool (usually highest-fee transactions first) and race to find a <b>nonce</b> — a number that makes the block's hash start with enough zeros. Pure brute-force search: trillions of attempts per second — expensive to do, trivial to verify (<b>proof-of-work</b>). The first to solve it broadcasts the sealed block; <b>the losing miners validate the winner's block</b> and immediately start racing for the next one. Earnings: the winner collects the <b>block reward</b> (newly created coin — how supply enters circulation, no central bank) <b>plus all transaction fees</b> in the block. That reward is the economic engine that sustains the whole network.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The incentive design is the insight: mining converts economic self-interest into network security — attacking the chain costs more than honestly earning from it (until someone controls 51% of the hash power)."</div></div>
+
+<div class="card answer"><h4>When does a transaction get signed / signed off?</h4>
+<p>Two moments, and it pays to name both. <b>Signed</b>: at creation — your wallet builds the transaction (recipient, amount, fee) and signs it with your <b>private key</b>, proving authorisation without revealing the key; anyone can verify with your public key. <b>Signed off (settled/final)</b>: after broadcast → every node independently validates (signature valid? balance sufficient? no double-spend? fee ok?) → mempool → mined into a block → consensus → and after ~6 further blocks (~60 min on Bitcoin) it reaches <b>finality</b> — permanent, no chargeback, no reversal.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Contrast with T+2: traditional settlement locks funds for ~48 hours across clearinghouses and correspondent banks with counterparty risk in the gap; blockchain settles in minutes with no exposure window. Key management is the flip side: whoever holds the private key controls the funds — no reset, no bank to call. You are the bank."</div></div>
+
+<div class="card answer"><h4>What is tokenisation?</h4>
+<p>Representing a real-world asset (bond, fund share, real estate) as a tradeable digital token on a blockchain. Live examples from the course: BlackRock's BUIDL money-market fund on Ethereum ($500M+), Franklin Templeton on Polygon. Why: near-instant settlement, fractional ownership, programmable assets, 24/7 markets. Projected $10–16T of tokenised assets by 2030 (McKinsey/BCG).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The Tokenisation Dilemma scenario shows the collisions: on a public chain, beneficiary data conflicts with GDPR privacy-by-design; right to erasure is impossible on-chain; and Ethereum's ECDSA is quantum-vulnerable — a €2B bond portfolio on rails that Shor's could break, where migration needs global consensus. One decision, three domains."</div></div>
+
+<div class="card answer"><h4>Why do banks use private/permissioned chains — and when is blockchain the wrong tool?</h4>
+<p>Private chains give: known participants (KYC/AML compliance), transaction privacy from competitors, speed (1,000s tx/s vs Bitcoin's ~7), and clear governance. Examples: JPMorgan Quorum/JPM Coin ($1B+ daily), R3 Corda (DTCC, HSBC), Hyperledger. Wrong tool test (Wüst &amp; Gervais): <b>if the parties already trust each other</b> — same parent company, one authority — a shared database is faster, cheaper and simpler. Blockchain's value is removing the need for trust between independent, potentially adversarial parties. (Collision type D: necessity vs overhead.)</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The failure pattern is governance, not technology: TradeLens, ASX CHESS, We.Trade all died because competitors wouldn't join a platform a rival controlled. What worked — JPM Coin, HSBC FX Everywhere, BUIDL — had narrow scope, clear efficiency gain, controlled participants. Practice-test Q15 is exactly this."</div></div>
+</div>
+
+<h2 style="--accent:var(--purple)">Cross-domain (the 10–12 zone)</h2>
+<div class="grid wide">
+<div class="card answer"><h4>★ Agentic AI × Blockchain (the teacher's favourite)</h4>
+<p>Both are systems that <b>act without a human in the moment</b>: an agent plans and executes autonomously; a smart contract executes automatically when conditions are met. Combine them — AI agents transacting on blockchain rails — and you get machine-to-machine finance with three compounding problems. ① <b>Accountability gap squared</b>: no framework exists for who owns an autonomous agent's action, and the chain's finality means the action can't be reversed — an agent's mistake is permanent (error compounding meets irreversibility). ② <b>GDPR Art. 22</b>: a smart contract executing automated decisions about people is automated decision-making that requires explainability and human override — neither of which the stack can provide. ③ <b>No jurisdiction</b>: the chain has no owner and no off switch; who do you regulate?</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Design mitigation: keep a human gate wherever the action is irreversible (which on-chain is: everything), cap agent transaction limits in the smart contract itself, and log agent reasoning off-chain for auditability. Timeline from the course: agentic AI on blockchain rails is a 5–10 year emerging connection with no accountability framework — governance must precede deployment, not follow it."</div></div>
+
+<div class="card answer"><h4>Quantum × Blockchain (ECDSA breaks)</h4>
+<p>Blockchain security rests on ECDSA signatures (wallets) and hash assumptions — <b>Shor's algorithm breaks ECDSA</b>. When quantum arrives, an attacker could forge signatures and spend from any exposed wallet. Worse, the fix is uniquely hard: a bank upgrades its own systems unilaterally, but migrating a decentralised chain to post-quantum crypto requires <b>consensus from thousands of independent nodes</b>, simultaneously. HNDL applies to on-chain records too — and everything on-chain is public and permanent, so harvesting is trivial.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The Post-Quantum Bank scenario: 'we can fix our own systems — can we fix the shared ones?' A consortium ledger (R3 Corda with HSBC, DTCC, Barclays) needs every counterparty to agree and act at the same time. Collision type C (present security vs future break) landing on top of a coordination problem."</div></div>
+
+<div class="card answer"><h4>AI × Governance (lineage &amp; audit)</h4>
+<p>Governance is not a constraint on AI — it is the infrastructure that makes AI deployable in regulated industries. Lineage lets you trace every output back through the pipeline (required for EU AI Act audits, GDPR explanations, Basel/BCBS 239 risk models). Without lineage you cannot explain outputs to regulators — the most likely consequence of deploying GenAI without governance infrastructure.</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "The organisations that lead build AI on a governance foundation from day one — governance as competitive advantage, not compliance cost. The ones that struggle bolt it on after deployment: technically possible, commercially and reputationally very costly."</div></div>
+
+<div class="card answer"><h4>Governance × Quantum (PQC is a governance programme)</h4>
+<p>Post-quantum migration is not a 2035 technical event — it's an enterprise governance decision made today under uncertainty: inventory what encryption protects what data, classify by how long each secret must live, prioritise long-lived secrets, adopt NIST standards, run hybrid (classical + PQC in parallel) with a rollback path. The trade-off: certain present cost ($800M–1.2B for a large bank) vs uncertain future risk (retroactive compromise of everything harvested meanwhile).</p>
+<div class="upgrade"><b>⤴ Upgrade:</b> "Fiduciary time horizons change the math: a pension fund's 40-year liabilities outlast every quantum timeline — 'prudent fiduciary duty' vs 'speculative spend' is a defensible judgment call either way, but doing nothing must be an explicit decision, not a default. Regulators already expect migration plans — inaction is an audit finding."</div></div>
+</div>
+</section>
+
+<!-- ==================== PANE 3: CASE REASONING ==================== -->
+<section class="pane" id="p3">
+<div class="intro"><b>How to use in the exam:</b> you'll get a <i>fictional</i> case. The named cases below are your <b>evidence bank</b> — cite them as analogies ("this is the same shape as Knight Capital, where…"). Work the 7-step skeleton top to bottom; pull diagnoses from the four taxonomies; pull fixes from the redesign toolbox; close with a cross-domain connection for the 10–12.</div>
+
+<h2 style="--accent:var(--teal)">📋 Copy-paste blocks — <span class="br">[BRACKETS]</span> = fill in · <span class="alt">{option / option / option}</span> = pick one, delete the rest</h2>
+<div class="grid wide">
+
+<div class="card tpl answer"><h4>Sentence starters &amp; connectors (mix these in so answers don't all sound alike)</h4>
+<p><b>Opening a diagnosis:</b> <span class="alt">{The heart of the problem is… / What stands out immediately is… / Before anything else, notice that… / If I had to name a single root cause, it would be… / Reading the case closely, the pattern underneath is…}</span></p>
+<p><b>Adding a second point:</b> <span class="alt">{Compounding this, … / A second, quieter problem is… / This interacts badly with… / Layered on top of that sits… / What makes it worse is that…}</span></p>
+<p><b>Moving to consequences:</b> <span class="alt">{The practical consequence is… / This matters because… / Left running, this means… / The people who actually pay for this are…}</span></p>
+<p><b>Bringing in a course case:</b> <span class="alt">{The course saw exactly this shape when… / This mirrors what happened at… / A useful contrast here is… / The closest real-world parallel is…}</span></p>
+<p><b>Conceding a trade-off:</b> <span class="alt">{To be fair, … / The counterargument deserves a hearing: … / This comes at a real cost: … / None of this is free —}</span></p>
+<p><b>Concluding / deciding:</b> <span class="alt">{On balance, … / Weighing which error is the disaster here, … / My recommendation, with conditions, is… / Taking the two years ahead rather than the current quarter as the horizon, …}</span></p></div>
+
+<div class="card tpl answer"><h4>Full case-answer template (paste once, fill in, pick variants)</h4>
+<p><b>Diagnosis.</b> <span class="alt">{Reading this case closely / Taking the case apart / Looking at the setup as a whole}</span>, <span class="alt">{the most serious issue / the core failure / the pattern underneath everything else}</span> is <span class="br">[PATTERN — e.g. feedback loop bias / Goodhart's Law / an activity proxy]</span>: <span class="br">[EVIDENCE from the case, one line]</span>. <span class="alt">{This is essentially the same shape as / The course saw exactly this at / A close real-world parallel is}</span> <span class="br">[COURSE CASE]</span>, where <span class="br">[one-line parallel]</span>. <span class="alt">{Compounding this / Layered on top of that / A second, quieter problem}</span> is <span class="br">[PATTERN 2]</span> — <span class="br">[EVIDENCE 2]</span>.</p>
+<p><b>Why this is a problem.</b> <span class="alt">{The damage is mechanical rather than hypothetical: / The mechanism deserves spelling out: / Why does this matter? Follow the chain:}</span> the system <span class="br">[what it does]</span>, which <span class="alt">{leads to / cascades into / quietly produces}</span> <span class="br">[what that causes]</span>, and the people <span class="alt">{bearing the cost / actually harmed}</span> are <span class="br">[WHO]</span>. <span class="alt">{Crucially / What makes it dangerous / The part the organisation cannot see is that}</span> nobody inside notices: <span class="alt">{the dashboard tracks a metric that stays healthy while the real goal decays / the failure is silent by construction / the human oversight is performative / the model keeps reporting high confidence even as it drifts}</span>.</p>
+<p><b>Why it gets worse.</b> <span class="alt">{Left alone, this does not stay stable — it compounds. / If nothing changes, time works against them. / This is a problem with a clock attached.}</span> <span class="br">[THE ENGINE: the feedback loop means today's outputs become tomorrow's training data / errors compound multiplicatively across steps / the world drifts while the model stands still / scaling up multiplies the blast radius of every unaudited decision / the harvest-now clock keeps running / on-chain finality makes each mistake permanent]</span>. <span class="alt">{At the same time / Meanwhile / In parallel}</span>, regulatory exposure accrues: <span class="br">[EU AI Act high-risk / GDPR Art. 17 or 22 / Air-Canada-style liability for every statement]</span>.</p>
+<p><b>Immediate fix.</b> <span class="alt">{The first priority is to stop the bleeding: / Before any redesign, three things should happen this month: / In the short term I would}</span> <span class="br">[human gate with real authority on the risky step / freeze further scaling / kill switch at a defined loss level / independent audit of the claimed metric / take the chatbot off policy questions or ground it]</span>.</p>
+<p><b>Structural redesign.</b> <span class="alt">{For the longer term, / Structurally, / Once the acute risk is contained,}</span> the system should be rebuilt against the seven conditions for viable deployment — <span class="alt">{it currently fails on / and right now it clearly breaks}</span> <span class="br">[clear scope / data fitness / feedback loops / recovery / right measurement / explainability / human backstop]</span>. <span class="alt">{Concretely, I would / The redesign should}</span> <span class="br">[2–3 controls from the toolbox]</span>. <span class="alt">{A good model to copy is / The course offers a picture of what good looks like:}</span> <span class="br">[Stripe Radar / AlphaFold / JPMorgan COIN / Waymo]</span>, <span class="alt">{which succeeded precisely because / whose lesson is}</span> <span class="br">[why]</span>.</p>
+<p><b>Cross-domain close.</b> <span class="alt">{Finally, this problem does not stay inside one domain. / Stepping back, the wider connection is worth naming. / It is worth closing one level up.}</span> <span class="br">[ONE CLOSER SENTENCE — see closers card]</span>. <span class="alt">{The honest caveat is that my fix has a price: / None of this is free —}</span> <span class="br">[what it costs]</span>, <span class="alt">{which I accept because / a price worth paying given that}</span> <span class="br">[which error is the disaster here]</span>.</p></div>
+
+<div class="card tpl answer"><h4>Diagnosis sentence bank (lift single sentences — openers vary on purpose)</h4>
+<p>• At its root, this is <b>historical/label bias</b>: the training labels themselves carry past biased decisions, so the model has faithfully learned the institution's history rather than the underlying reality — the same mechanism that sank Amazon's hiring tool.</p>
+<p>• The tell here is that removing the sensitive attribute changed nothing: correlated features quietly reconstruct it. That is <b>proxy/measurement bias</b>, and it means the outputs still split along the very variable that was supposedly excluded.</p>
+<p>• What makes this case dangerous is the loop: the model's own outputs decide what tomorrow's training data can even contain — <b>feedback loop bias</b> — so an early tilt compounds with growing confidence instead of correcting itself, exactly as YouTube's recommender did.</p>
+<p>• Notably, no label is wrong and no proxy is smuggling anything in; the group is simply missing from the data. This is <b>representation bias</b>, and it means the failure was baked in before a single line of production code existed — the Google Photos shape.</p>
+<p>• What the organisation calls "done" is really just "attempted": completing the rollout has been mistaken for verifying it worked. That is an <b>activity proxy</b> — the precise mechanism behind Knight Capital's $440M in 45 minutes.</p>
+<p>• A fluent answer is being treated as a correct one. This is an <b>output proxy</b>: nothing between the system and the customer checks the output against the source of record — the mistake that made Air Canada legally liable for its chatbot's invented policy.</p>
+<p>• The only evidence that the system works comes from the party selling it — a <b>self-reported metric proxy</b>. Without independent validation, this is the Pieces Technologies pattern, and in its extreme form, Theranos.</p>
+<p>• Notice what the KPI has done: the moment it became a target, it stopped measuring what it was built to measure. This is <b>Goodhart's Law</b> in action — the metric improves while the underlying goal quietly decays.</p>
+<p>• The human oversight here is real on paper and empty in practice: reviews happen, overrides don't. That is <b>automation bias</b> — the Dutch Benefits pattern of performative rather than genuine control.</p>
+<p>• The system did exactly what its protocol said while the situation had already changed — the <b>Observe step of the agentic loop failed</b>, which is precisely how Cruise's vehicle dragged a pedestrian while "correctly" pulling over.</p>
+<p>• There is an irony at the heart of this design: the tamper-evidence that makes the ledger trustworthy is the same property that makes deletion impossible. This is the <b>permanence vs. right-to-change collision</b> — immutability meeting GDPR Article 17 head-on.</p>
+<p>• "It is unbroken today" is not a safety argument when the data must stay secret for decades: an adversary can copy it now and simply wait. This is <b>harvest now, decrypt later</b> — the vulnerability already exists; only the decryption capability is pending.</p>
+<p>• Before asking how to build the blockchain, it is worth asking whether one is needed at all: these parties already trust each other, so the chain adds overhead without solving a trust problem — the <b>necessity vs. overhead</b> test (Wüst &amp; Gervais).</p></div>
+
+<div class="card tpl answer"><h4>Why-it's-a-problem + future-risk paragraphs</h4>
+<p><b>Why:</b> <span class="alt">{What makes this genuinely worrying is that / The uncomfortable part is that / Notice that}</span> the harm is invisible in the organisation's own numbers: the dashboard tracks <span class="br">[THROUGHPUT/COST METRIC]</span>, not decision quality by subgroup, so the failure is silent by construction. <span class="alt">{Loud failures get governed; quiet ones compound. / A crash gets a task force; a slow leak gets a celebration of the KPI.}</span> Those actually paying the price — <span class="br">[GROUP]</span> — have <span class="br">[no explanation and no appeal route / no way of even knowing they were affected]</span>, <span class="alt">{which is itself a governance failure under GDPR Art. 22 / which turns a technical flaw into a rights problem}</span>.</p>
+<p><b>Future:</b> <span class="alt">{This worsens on three clocks. / Time is not neutral here — three things deteriorate on their own.}</span> First, <span class="br">[the feedback loop / drift]</span>: every retraining cycle bakes the current outputs deeper into the model. Second, scale: <span class="alt">{raising / expanding}</span> <span class="br">[the ceiling / the rollout / the agent's autonomy]</span> multiplies the blast radius of every unaudited decision — <span class="alt">{scale has to be earned by data, not announced on a roadmap (Waymo vs Cruise) / the Starbucks lesson: scaling before validating just distributes the failure}</span>. Third, the regulatory clock: every month in operation accrues exposure under <span class="br">[the EU AI Act / GDPR / the Air Canada precedent that every statement to a customer is binding]</span>.</p></div>
+
+<div class="card tpl answer"><h4>Fix + redesign paragraph</h4>
+<p><b>Immediately:</b> <span class="alt">{The short-term moves are about containment, not perfection. / Three things should happen before the month is out.}</span> Put a human gate with real authority on <span class="br">[THE IRREVERSIBLE STEP]</span> — and track the override rate, because a reviewer who never overrides is a rubber stamp, not a safeguard. Freeze further scaling <span class="alt">{until the audit lands / at the current level}</span>, and commission an independent audit of <span class="br">[THE CLAIMED METRIC]</span>: precision and recall by subgroup against the base rate, not a single flattering accuracy number.</p>
+<p><b>Structurally:</b> <span class="alt">{The deeper redesign runs along four lines. / Rebuilding this properly means changing what is measured, watched, explained and scoped.}</span> Replace <span class="br">[THE CORRUPTED KPI]</span> with paired metrics that include decision quality and subgroup error rates, so the dashboard can actually see the failure mode. Build the monitoring loop that was missing — thresholds, alerts, a named owner whose <i>job</i> it is to read them, and retraining triggered by policy rather than by scandal. Add lineage and a model card so every output can be explained to a regulator <span class="alt">{before one asks / rather than after a journalist does}</span>. And narrow the scope, redeploying incrementally — pilot, measure against benchmarks, then scale — <span class="alt">{the COIN pattern: ambitious AI on boring governance foundations / the Waymo pattern: scale earned by data}</span>. Throughout, ensure recovery is possible: a kill switch at a defined loss level, and harms that can actually be reversed.</p></div>
+
+<div class="card tpl answer"><h4>Cross-domain closers (pick ONE, add an opener, done)</h4>
+<p><b>Openers to vary:</b> <span class="alt">{Stepping back, / Beyond the immediate case, / Viewed across the course's four domains, / What elevates this from a technical issue to a strategic one is that / Finally, it is worth connecting this to}</span> …</p>
+<p>• …this threshold choice is really a governance decision in disguise: error rates that cluster by demographic turn a tuning parameter into discrimination risk — which is precisely why the EU AI Act classifies <span class="br">[credit / hiring / healthcare]</span> as high-risk.</p>
+<p>• …the same permanence that makes the ledger trustworthy puts it on a collision course with GDPR's right to erasure. The resolution is architectural rather than legal: personal data lives off-chain, and only hashes go on-chain.</p>
+<p>• …because this data must stay confidential for <span class="br">[N]</span> years, harvest-now-decrypt-later applies today, not in 2035: post-quantum migration is a present governance obligation — NIST deprecates RSA by 2030 — rather than a future technical event.</p>
+<p>• …combining autonomous agents with smart contracts stacks probabilistic, compounding errors on top of irreversible execution, in a space where no accountability framework for machine-to-machine transactions yet exists. The human gate therefore belongs <i>before</i> anything touches the chain.</p></div>
+
+<div class="card tpl answer"><h4>W3 governance-decision template ("what should they do?")</h4>
+<p><b>The tension.</b> <span class="alt">{At bottom, this is a decision under uncertainty: / Strip away the technology and what remains is a classic trade-off: / The board is really being asked to price}</span> <span class="br">[a certain present cost against an uncertain future risk / innovation speed against safety / average benefit against subgroup harm]</span>. <span class="alt">{There is no correct answer here — only a defensible one. / The honest framing is that both options carry risk; the question is who bears it, and when.}</span></p>
+<p><b>Both sides, briefly.</b> <span class="alt">{The case for acting: / In favour:}</span> <span class="br">[strongest argument + course anchor]</span>. <span class="alt">{The case for holding back: / Against:}</span> <span class="br">[strongest counter + course anchor]</span>. <span class="alt">{And the counterfactual deserves respect: / One trap to avoid:}</span> the alternative to an imperfect system is not perfection but the flawed status quo, which has its own well-documented error rate.</p>
+<p><b>Decision.</b> <span class="alt">{On balance, I recommend / Weighing the horizons involved, my advice is to / My recommendation — and I would put my name on it — is to}</span> <span class="br">[proceed with conditions / delay until X is independently verified / decline]</span>, conditional on <span class="alt">{four guardrails / the following}</span>: contractual use-case boundaries; an independent audit of <span class="br">[THE CLAIM]</span> before any scale-up; a named accountable owner; and a standing review trigger — if <span class="br">[frontline complaints / subgroup error rates]</span> cross a threshold within 90 days, we revisit regardless of what the dashboard says. <span class="alt">{Doing nothing is also a decision — and increasingly, an audit finding. / The one indefensible option is drifting into the outcome without ever having decided.}</span></p></div>
+</div>
+
+<h2 style="--accent:var(--red)">🧭 The 7-step answer skeleton (use for every case)</h2>
+<ol class="steps">
+<li><b>Read for the shape, not the story.</b> What is being optimised? Who bears each error? What did the org <i>measure</i> vs what did it <i>want</i>? Where is the human in the loop — real or performative? First move (80/20): assume the data before the algorithm.</li>
+<li><b>Diagnose — name the pattern(s), precisely.</b> Pick from the taxonomies below: failure category (1 of 3) → bias type (1 of 4, if bias) → proxy creep type (1 of 3, if a proxy) → collision (1 of 4, if property-vs-rule) → law(s) that fit. "There's bias" is the first sentence of a diagnosis, not the diagnosis — name the mechanism.</li>
+<li><b>Explain WHY it's a problem.</b> The mechanism: what does the system do → what does that cause → who is harmed → why doesn't the org notice? (Silent failure? Confidence trap? Automation bias? Metric looks great while reality decays?)</li>
+<li><b>Explain why it gets WORSE in the future.</b> Pick the engine: feedback loop (outputs become training data) · error compounding across agentic steps · drift as the world moves · scale amplifies small error rates · HNDL clock ticking · finality makes each mistake permanent · regulatory exposure accruing (EU AI Act / GDPR).</li>
+<li><b>Fix — immediate.</b> Stop the bleeding: human gate on the risky step, kill switch / circuit breaker, cap autonomy, suspend rollout, alert thresholds, independent audit of the metric.</li>
+<li><b>Redesign — structural.</b> Run the 7 conditions checklist (below) and pick from the redesign toolbox. Anchor with a success contrast: what would Waymo/Stripe/COIN/AlphaFold do? (Narrow scope, ground truth, staged rollout, monitoring, human routing.)</li>
+<li><b>Connect a second domain (the 10–12 move).</b> One sentence: same pattern elsewhere — threshold choice → discrimination → EU AI Act · immutability → GDPR erasure · encryption → HNDL · agentic → smart contracts. Then acknowledge the trade-off your fix costs (nothing is free — precision vs recall, speed vs safety, cost now vs risk later).</li>
+</ol>
+
+<div class="callout"><b>Magic sentences that score:</b> "The system did exactly what it was designed to do — that is exactly the problem." · "The metric was optimised; the thing it measured was not." · "High confidence is not high accuracy — the model cannot know it has drifted." · "The save was lucky, not structural — you cannot rely on it twice." · "Was this poorly ideated, or well-ideated and poorly executed?" · "Loud failures are easier to govern than quiet ones." · "Fast to harm, slow to remediate — the asymmetry is the injustice." · "Autonomy is a dial, not a switch."</div>
+
+<div class="callout"><b>🗺 The 30-second routing scan — do this before writing anything.</b> Read the case once, then silently ask four questions. Only write up the ones that genuinely fire — forcing a taxonomy that doesn't fit signals checklist-marching, not judgment. ① Which of the <b>3 failure shapes</b> fits the overall story? (Almost always at least one.) ② Is a model or training data involved → which of the <b>4 bias types</b>, if any? ③ Is something being trusted without independent verification → which of the <b>3 proxy shapes</b>, if any? ④ Does a built-in system property collide with a legal or external requirement → which of the <b>4 collisions</b>, if any — <i>and if there's no blockchain, quantum, or GDPR tension in the case, the honest answer is "none", so write nothing</i>. A typical case triggers 3–5 patterns total, not all 14. Two or three precisely evidenced diagnoses beat six loose ones — every pattern you name needs one line of case evidence attached, or it's a guess.</div>
+
+<h2 style="--accent:var(--gold)">🔍 Taxonomy 1 — Three failure categories (the overall shape of the story)</h2>
+<div class="grid">
+<div class="card"><h4>1 · Metric Corruption</h4><p>The organisation optimises a number, and the number has quietly stopped measuring the thing it was supposed to stand for. The system usually works <i>perfectly</i> — that is the trap: the KPI improves while the real goal (welfare, fairness, quality) decays out of sight.</p><p class="why"><b>Choose this when:</b> a KPI, target, bonus or budget drives behaviour, and the case shows a gap between the number and reality (complaints rise while the dashboard celebrates; tickets closed fast but problems unfixed). <b>Ask:</b> "what does the metric NOT capture, and who lives in that blind spot?" Anchors: YouTube (watch-time ≠ welfare), Uber Sydney (surge = supply signal, always), Dutch benefits (budget conditional on "fraud found"). Usually pairs with Goodhart/Campbell and often with a proxy-creep shape.</p></div>
+<div class="card"><h4>2 · Organisational Failure</h4><p>The technology is almost beside the point — the organisation's own structure, incentives or politics produced the failure, and would have produced it with any technology. The foundation was broken, and they built anyway.</p><p class="why"><b>Choose this when:</b> the case features incentives that reward the wrong thing, leadership buying what it cannot evaluate, silos that don't talk, suppressed evidence, or two parties who both benefit from a failing project continuing. <b>Ask:</b> "if I replaced the AI with a spreadsheet, would this organisation still have failed?" If yes — it's organisational. Anchors: Post Office Horizon (institution believed the machine over 900 consistent humans), IBM Watson (both actors needed the project alive, neither needed it to work), Theranos (a board of celebrities with no power to verify).</p></div>
+<div class="card"><h4>3 · Adaptive Failure</h4><p>Time is the villain: the world moved and the model stood still — or, in the sharpest version (the Lucas Critique), deploying the system <i>itself</i> changed the behaviour it was trained to predict, so the model invalidated its own training data.</p><p class="why"><b>Choose this when:</b> the case says "worked at launch, wrong now", the training data comes from a different era, or the people being modelled react to the model (fraudsters adapt, applicants game the criteria, markets respond). <b>Ask:</b> "did reality change on its own (drift), or did the system's presence change it (Lucas)?" — naming which one is a precision point. Anchors: Dutch benefits (enforcement changed applicant behaviour), any drift scenario, Watson (synthetic scenarios met real patients).</p></div>
+<div class="card"><h4>Can a case be two shapes at once? Yes — say so.</h4><p>The strongest cases deliberately overlap: Dutch Benefits is metric corruption (fraud-found budget) AND organisational (perverse incentive design) AND adaptive (Lucas). If two fire, name the <b>primary</b> shape — the one that, if fixed, would have prevented the most harm — then note the second in one sentence. "Primarily metric corruption, aggravated by an organisational incentive to keep the number rising" reads as judgment; listing three shapes with equal weight reads as hedging.</p></div>
+</div>
+
+<h2 style="--accent:var(--gold)">🔍 Taxonomy 2 — Four types of bias (name the mechanism, the cure differs)</h2>
+<div class="grid">
+<div class="card"><h4>⚖ How to tell the four apart — ask WHERE the problem lives</h4><p>Work through this in order, and stop at the first yes. ① Is the <b>label/outcome itself</b> a past human decision that could be biased (hired, admitted, approved, prosecuted)? → <b>historical/label bias</b>. ② Was the sensitive attribute removed, yet outputs still track it because <b>correlated input features</b> rebuild it (postcode→ethnicity, part-time years→gender)? → <b>proxy bias</b>. ③ Do the model's <b>own decisions shape what future training data can contain</b> (rejected people generate no outcome data; recommended content generates more engagement)? → <b>feedback loop bias</b>. ④ None of the above — the data simply <b>under-covers a group</b> (few dark-skin images, one accent, one scanner type)? → <b>representation bias</b>. They can stack: Amazon Hiring was ① AND ②. If two apply, name both and say which is upstream — the label problem usually is.</p></div>
+<div class="card"><h4>1 · Historical / Label bias</h4><p>The <b>label itself</b> encodes a past biased decision. Amazon: "hired/not hired" carried a decade of bias. Hospital drill: "past spending" as label for "medical need" — spending reflected access, not need. <b>Lives in the label, not the inputs.</b></p><p class="why">Cure: audit whether labels are a valid measure of the real target before training; relabel or find outcome-based ground truth.</p></div>
+<div class="card"><h4>2 · Proxy / Measurement bias</h4><p>You exclude the sensitive attribute, but <b>correlated features reconstruct it</b>. Amazon: gendered words stood in for gender; corrected, it found new proxies. Insurer drill: dropped gender, kept occupation + vehicle type → pricing still split by gender.</p><p class="why">Cure: test outputs for correlation with the excluded attribute (fairness audit by group), not just remove the column. Note: this is what your notes call "poor proxy / label bias" — mitigate with better proxies and better training data.</p></div>
+<div class="card"><h4>3 · Feedback loop bias</h4><p>The model's own outputs become tomorrow's training data — early bias <b>compounds instead of self-correcting</b>. YouTube: engagement → recommendations → engagement. Lending drill: rejected Group A never generates repayment data → ever fewer Group A success stories to learn from.</p><p class="why">Cure: break the loop — hold-out populations, explore/exploit randomisation, collect outcome data independent of the model's decisions.</p></div>
+<div class="card"><h4>4 · Representation / Sampling bias</h4><p>No bad label, no proxy — a group is simply <b>underrepresented in the training data</b>. Google Photos: darker skin tones under-sampled; failure baked in before any code. Voice-assistant drill: trained on one accent group.</p><p class="why">Cure: fix the dataset (representative sampling), test performance per subgroup before launch, diverse QA ("a diverse QA team could have caught this by testing on themselves").</p></div>
+</div>
+
+<h2 style="--accent:var(--gold)">🔍 Taxonomy 3 — Three shapes of Proxy Creep</h2>
+<div class="grid">
+<div class="card"><h4>⚖ How to tell the three apart — ask WHAT is being trusted</h4><p>All three are the same disease — a stand-in accepted in place of verification — but the stand-in differs. ① Trusting that <b>a task was completed</b> ("deployed", "migrated", "patched", "rolled out") without checking it worked? → <b>activity proxy</b>. ② Trusting that <b>an output is correct</b> because it exists and sounds fluent (chatbot answers, generated summaries, translations)? → <b>output proxy</b>. ③ Trusting <b>the claimant's own numbers</b> ("99% accurate, validated internally", self-designed benchmarks)? → <b>self-reported metric proxy</b>. The tell-word in the case is usually a completed-sounding verb or a suspiciously precise self-quoted figure. Proxy creep frequently co-occurs with metric corruption — the proxy IS the corrupted metric viewed up close.</p></div>
+<div class="card"><h4>1 · Activity proxy</h4><p>"We did the activity" mistaken for "we verified it worked." Knight: 8 servers updated felt like 8 verified. Starbucks: rollout = validation. Drill: "migration complete" but nobody queried the new database.</p><p class="why">Cure: independent verification step between doing and declaring done — automated config checks, acceptance tests, staged pilots with benchmarks.</p></div>
+<div class="card"><h4>2 · Output proxy</h4><p>"The system produced an answer" mistaken for "the answer is correct." Air Canada: fluent chatbot answer treated as verified policy. Drill: fluent translation shipped unchecked.</p><p class="why">Cure: grounding + validation gate against the source of record (RAG grounded in the actual policy; human check where stakes are high). Fluency is not accuracy.</p></div>
+<div class="card"><h4>3 · Self-reported metric proxy</h4><p>A party's own measurement stands in for independent validation. Pieces: self-defined "0.001% hallucination rate," never audited. Theranos: "trade secret" hid everything. Drill: vendor's own 99% benchmark, never reproduced.</p><p class="why">Cure: third-party audit, industry-standard metrics, reproducible benchmarks, contractual right to test. Ask: who measured this, and who checked them?</p></div>
+</div>
+
+<h2 style="--accent:var(--gold)">🔍 Taxonomy 4 — Four property-vs-requirement collisions</h2>
+<div class="callout"><b>When does this taxonomy fire at all?</b> Only when an <i>inherent, by-design property</i> of a system (immutability, pseudonymity, encryption with an expiry assumption, decentralised trust) runs into an <i>external requirement</i> (GDPR, AML/KYC, court orders, long retention periods, a business that doesn't actually need the property). If the case has no blockchain, no cryptography with a long horizon, and no permanence-vs-deletion tension — skip this taxonomy entirely and say nothing. Spotting a collision correctly is high-value precisely because it's cross-domain by nature; forcing one where none exists is the classic over-reach.</div>
+<div class="grid">
+<div class="card"><h4>A · Permanence vs. the right to change</h4><p>Immutability vs GDPR erasure / court-ordered correction. The tamper-evidence that makes a chain trustworthy is exactly what blocks deletion — you cannot quietly un-write a block.</p><p class="why">Fixes: keep personal data OFF-chain with on-chain hashes only; store consent pointers not records; private chain with agreed rewrite governance if trust allows.</p></div>
+<div class="card"><h4>B · Anonymity vs. accountability</h4><p>Public wallets need no identity; AML/tax law demands identification above thresholds.</p><p class="why">Fix pattern from the course drill: verify identity only above the legal threshold; keep the public chain below it. Layered KYC at the on/off-ramps.</p></div>
+<div class="card"><h4>C · Present security vs. future-dated break</h4><p>HNDL — safe today by an assumption with a known expiry. 40-year documents / 30-year trial data under RSA = already at risk.</p><p class="why">Fix: classify data by secrecy lifetime; anything outliving the quantum timeline migrates to PQC first; crypto-agility so algorithms can be swapped.</p></div>
+<div class="card"><h4>D · Necessity vs. overhead</h4><p>Blockchain only pays for itself when independent, mutually-distrusting parties need shared truth. Sister companies under one parent proposing a chain → ask "would a shared database do?" (Wüst &amp; Gervais).</p><p class="why">Fix: if a trusted party exists, use a database. Blockchain = trust problem between strangers, not an upgrade for its own sake.</p></div>
+</div>
+
+<h2 style="--accent:var(--gold)">⚖ The Laws wall (recognition, with case anchors)</h2>
+<div class="callout"><b>How to cite a law well:</b> cite at most 2–3 per case, each with one line of case evidence, and let the law do argumentative work — "this is Goodhart's Law: the moment tickets-closed became the target, it stopped measuring service quality" — rather than name-dropping. A law without evidence scores like a guess; evidence without the law's name leaves points on the table (name the named things). If two laws overlap, pick the one whose <i>mechanism</i> matches, not the more famous one.</div>
+<div class="grid">
+<div class="card"><h4>⚖ Commonly confused pairs — the quick separations</h4>
+<p><b>Goodhart vs Campbell vs McNamara:</b> Goodhart = a measure made a target stops measuring (mechanism). Campbell = the more an indicator drives decisions, the more it gets corrupted — same family, corruption/gaming emphasis; citing them together as "the Goodhart/Campbell family" is safe. McNamara = a step earlier: choosing to optimise only what is <i>countable</i> and ignoring what isn't.</p>
+<p><b>Peter vs Dunning-Kruger:</b> Peter = structural — promotion lifts people to their level of incompetence (about hierarchies). Dunning-Kruger = psychological — the less someone knows, the more competent they feel (about individuals). The exec buying unverifiable AI = Peter; the exec overruling the experts after a weekend course = Dunning-Kruger.</p>
+<p><b>Murphy vs Chesterton's Fence:</b> Murphy = the untested safeguard fails exactly when needed (test your failsafes). Chesterton = don't <i>remove</i> a safeguard before understanding why it exists (respect existing fences). One is about neglect, the other about deletion.</p>
+<p><b>Conway vs Ashby:</b> Conway = the system's <i>shape</i> mirrors the org chart (three silos → three formats). Ashby = the controller's <i>capacity</i> is too small for the system's variety (5 reviewers vs 40M customers, two outputs for infinite circumstances).</p>
+<p><b>Parkinson vs Brooks:</b> Parkinson = work expands to fill time/budget (Watson: $62M, 5 years, 0 patients). Brooks = adding people to a late project makes it later (coordination overhead). Budget bloat = Parkinson; headcount backfire = Brooks.</p>
+<p><b>Gall vs "scale before validation":</b> Gall = complex systems designed from scratch never work — an <i>ideation</i> problem (Watson tried all of oncology at once). Scale-before-validation = the thing might work, but was rolled out before anyone checked — a <i>deployment</i> problem (Starbucks, Cruise, raising Astrid's ceiling).</p></div>
+<div class="card"><h4>Goodhart's Law</h4><p>A measure, once a target, stops being a good measure.</p><p class="why">Tickets-closed/hour rises, problems unfixed · loan-approval counts · Dutch "fraud found" budget.</p></div>
+<div class="card"><h4>Campbell's Law</h4><p>The more an indicator drives decisions, the more it gets corrupted.</p><p class="why">Teaching to the test. Sibling of Goodhart — safe to cite together as "the Goodhart/Campbell family."</p></div>
+<div class="card"><h4>Peter Principle</h4><p>People rise to their level of incompetence.</p><p class="why">Leadership buying AI they cannot evaluate: hospital execs + Watson, Post Office leadership + Horizon.</p></div>
+<div class="card"><h4>Parkinson's Law</h4><p>Work expands to fill the time/budget available.</p><p class="why">Watson: $62M, 5 years, 12 extensions, 0 patients. 8-week migration takes exactly 8 weeks.</p></div>
+<div class="card"><h4>Murphy's Law</h4><p>The untested safeguard fails when needed.</p><p class="why">Knight Capital's never-triggered failsafe; the 3-years-untested disaster-recovery failover.</p></div>
+<div class="card"><h4>Conway's Law</h4><p>Systems mirror the org's communication structure.</p><p class="why">Three regional offices → three inconsistent reporting formats. Siloed org → siloed governance. Arup: no cross-office verification.</p></div>
+<div class="card"><h4>Brooks's Law</h4><p>Adding people to a late project makes it later.</p><p class="why">3 months behind + 15 engineers = 5 months behind (onboarding/coordination overhead).</p></div>
+<div class="card"><h4>Amara's Law</h4><p>Overestimate short-run, underestimate long-run.</p><p class="why">"Blockchain replaces banking by 2019" → didn't; by 2035 it may quietly underpin infrastructure. JPMorgan quantum hype → recalibration.</p></div>
+<div class="card"><h4>Ashby's Law (Requisite Variety)</h4><p>A controller must be as complex as the system it governs.</p><p class="why">5-person compliance team vs 40M customers · two outputs (fraud/not) for infinite human circumstances (Dutch benefits).</p></div>
+<div class="card"><h4>Chesterton's Fence</h4><p>Don't remove a safeguard until you understand why it exists.</p><p class="why">Removing human judgment from fraud decisions (Dutch); Horizon replacing what human accounting quietly caught.</p></div>
+<div class="card"><h4>Lucas Critique <span class="tag t-x">bonus</span></h4><p>Deploying a model changes the very behaviour it was trained to predict — historical data can't safely automate a new policy.</p><p class="why">The named mechanism behind Adaptive Failure. Dutch benefits; any model whose subjects react to it.</p></div>
+<div class="card"><h4>McNamara Fallacy <span class="tag t-x">bonus</span></h4><p>Not everything countable counts; not everything that counts can be counted.</p><p class="why">Watch-time countable, radicalisation not — the measurable proxy wins, the real goal loses.</p></div>
+<div class="card"><h4>Hanlon's Razor</h4><p>Never attribute to malice what is adequately explained by stupidity (or negligence).</p><p class="why">The biased AI usually wasn't designed to discriminate — nobody checked. Matters for remediation: negligence needs process fixes, malice needs accountability (Post Office crossed from one to the other).</p></div>
+<div class="card"><h4>Dunning-Kruger Effect</h4><p>Limited knowledge overestimates its own competence; deep knowledge underestimates it.</p><p class="why">The weekend-AI-course executive overruling the data science team; boards buying tech they cannot evaluate (pairs with the Peter Principle).</p></div>
+<div class="card"><h4>Gall's Law</h4><p>A working complex system always evolved from a working simple system — a complex system designed from scratch never works.</p><p class="why">Watson tried all of oncology at once and never worked; COIN did one document type, validated, then extended. The design argument for narrow scope + incremental rollout.</p></div>
+<div class="card"><h4>Clarke's Third Law</h4><p>Any sufficiently advanced technology is indistinguishable from magic.</p><p class="why">When evaluators can't assess the technology, they evaluate the story — Theranos investors, the Arup employee on the deepfake call. The cure is independent verification, not better storytelling.</p></div>
+<div class="card"><h4>Discovery without disclosure <span class="tag t-case">pattern</span></h4><p>An organisation learns of a problem or misuse but doesn't notify affected parties or act.</p><p class="why">Facebook knew about Cambridge Analytica in 2015 and told no one for 3 years; Fujitsu knew Horizon had bugs while testifying it was robust. Aggravates any failure into a governance scandal.</p></div>
+</div>
+
+<h2 style="--accent:var(--green)">🛠 Fix &amp; redesign toolbox</h2>
+<h3>The 7 conditions for viable AI deployment (Week 3 framework — walk through ALL seven in a redesign; name which ones the case breaks)</h3>
+<div class="grid wide">
+<div class="card"><h4>1 · Clear scope</h4><p>The system has defined use-case boundaries: it does one well-specified thing, and everyone knows where it stops. Narrow beats grand — COIN did one document type, validated it, then extended; Watson tried "all of oncology" from scratch and never worked (Gall's Law).</p><p class="why"><b>Test questions:</b> Can you state in one sentence what the system decides and what it explicitly does NOT decide? Is there a boundary case everyone would agree falls outside? <b>Broken looks like:</b> mission language instead of scope ("revolutionise X"), scope that grew after deployment, or a chatbot answering policy questions nobody scoped it for.</p></div>
+<div class="card"><h4>2 · Data fitness</h4><p>The data actually matches what the system needs: labels that measure the true target (not a biased stand-in), representative coverage of everyone the system will meet, real rather than synthetic data, and ground truth wherever it exists (Stripe: reality labels every transaction as fraud or not).</p><p class="why"><b>Test questions:</b> Who created the labels, and could those decisions have been biased? Which groups are thin in the data? Has the world changed since collection? <b>Broken looks like:</b> "18 years of our own decisions" as ground truth, synthetic training scenarios, or a dataset predating a structural change (COVID, a recession, a new competitor).</p></div>
+<div class="card"><h4>3 · Feedback loops</h4><p>Information about real-world outcomes actually travels back to people who can act: dashboards someone owns, alert thresholds that trigger escalation, complaint channels wired to the model team — it must be someone's <i>job</i> to read the 97 error messages Knight Capital ignored.</p><p class="why"><b>Test questions:</b> If the system started failing for one subgroup tomorrow, what signal would fire, and on whose desk? How long until anyone knew? <b>Broken looks like:</b> a throughput dashboard that can't see error quality, complaints rising while "nothing unusual" shows, or monitoring that exists but has no named owner.</p></div>
+<div class="card"><h4>4 · Recovery from failure</h4><p>The system can be stopped, and its harms can be undone. A kill switch or circuit breaker at a defined loss level, a staged rollback path, and a hybrid/parallel run before any cutover — because some harms (a dragged pedestrian, an on-chain transfer, a wrongful prosecution) cannot be recovered from after the fact.</p><p class="why"><b>Test questions:</b> What loss level triggers automatic stop? Can an affected person be made whole? Is there a manual fallback process if we switch it off? <b>Broken looks like:</b> no off switch (Knight), irreversible actions taken autonomously, or a legacy process already dismantled so there's nothing to roll back to.</p></div>
+<div class="card"><h4>5 · Right measurement</h4><p>You measure what matters, not what is easy: precision AND recall, by subgroup, against the base rate — validated independently, never self-reported. A single flattering accuracy figure on imbalanced data is the signature of this condition failing.</p><p class="why"><b>Test questions:</b> Would this metric notice the failure mode we most fear? Who verified it, and were they independent of whoever built it? Does the KPI create an incentive to game it (Goodhart)? <b>Broken looks like:</b> "99.1% accuracy, validated internally", cost-per-application as the only number, or "papers published" standing in for capability (JPMorgan quantum).</p></div>
+<div class="card"><h4>6 · Explainability</h4><p>You can explain the decision to the affected person and to a regulator: lineage from raw data to output, a model card with a named owner, and per-decision reasoning where the EU AI Act and GDPR Art. 22 require it. For GenAI this is structurally hard — which is itself a deployment decision to justify.</p><p class="why"><b>Test questions:</b> If a rejected applicant asks "why?", what do they receive? Could you reconstruct which data and model version produced one specific decision? <b>Broken looks like:</b> "black box, but it works", no appeal route, or explanations that are post-hoc stories rather than traces.</p></div>
+<div class="card"><h4>7 · Human backstop</h4><p>A human can override the system's decision, at scale, with real authority — and the override must be genuine. The course's sharpest test: <b>check the override rate</b>. A reviewer who processes a file in 11 seconds and overrides 1 in 900 is a rubber stamp; the safeguard exists on paper only (automation bias, the Dutch Benefits pattern).</p><p class="why"><b>Test questions:</b> What is the actual override rate? Does the reviewer have the time, information, and standing to disagree? What happens to a reviewer who overrides often? <b>Broken looks like:</b> "a human reviews everything" with near-zero overrides, review quotas that make real review impossible, or overriders quietly penalised for slowing throughput.</p></div>
+</div>
+
+<h3>Concrete fixes to name (pick 2–3 that match your diagnosis)</h3>
+<div class="pillbox">
+<span class="pill"><b>Quality gate at ingestion:</b> audit labels &amp; representativeness before training (fixes bias types 1, 4)</span>
+<span class="pill"><b>Fairness audit:</b> FP/FN rates cross-tabbed by demographic/subgroup before launch (bias 2; EU AI Act)</span>
+<span class="pill"><b>Break the loop:</b> holdout populations / randomised exploration so outputs don't poison training data (bias 3)</span>
+<span class="pill"><b>Staged rollout:</b> pilot → measure vs benchmarks → scale (anti-Starbucks; Waymo's patience)</span>
+<span class="pill"><b>Deployment verification:</b> automated config checks — verify, don't just deploy (anti-Knight; activity proxy)</span>
+<span class="pill"><b>Monitoring loop:</b> aggregate small errors into a signal; thresholds; named owner; escalation (silent-failure antidote)</span>
+<span class="pill"><b>Kill switch:</b> automatic stop at a defined loss/error level (Knight had none)</span>
+<span class="pill"><b>RAG grounding + validation gate:</b> answers checked against the source of record (output proxy)</span>
+<span class="pill"><b>Independent validation:</b> third-party audit, standard metrics, reproducible tests (self-reported proxy)</span>
+<span class="pill"><b>Human gate at the irreversible step:</b> credit decision, clinical note, refund, on-chain transaction</span>
+<span class="pill"><b>Real (not performative) oversight:</b> track override rates; if ~0%, the human is a rubber stamp</span>
+<span class="pill"><b>Drift monitoring + retraining policy:</b> SLA thresholds, alerts, scheduled retrains on recent data</span>
+<span class="pill"><b>Data lineage + model card:</b> named accountable owner, documented provenance (regulator-ready)</span>
+<span class="pill"><b>DPIA before high-risk processing;</b> purpose-limitation check before any data reuse</span>
+<span class="pill"><b>Out-of-band verification:</b> pre-agreed second channel for high-value instructions (anti-Arup)</span>
+<span class="pill"><b>Off-chain personal data:</b> hashes on-chain, data off-chain (GDPR × immutability fix)</span>
+<span class="pill"><b>Crypto-agility + PQC migration:</b> inventory → long-lived secrets first → NIST standards → hybrid deployment</span>
+<span class="pill"><b>Autonomy dial:</b> cap agent transaction limits; checkpoints between steps; short workflows (error compounding)</span>
+<span class="pill"><b>Neutral consortium governance:</b> no competitor controls the shared chain (anti-TradeLens)</span>
+<span class="pill"><b>Review trigger:</b> 90-day re-assessment if frontline complaints exceed threshold — regardless of the dashboard</span>
+</div>
+
+<h2 style="--accent:var(--blue)">🔧 Technical remediation playbook — what exactly to do, and when</h2>
+<div class="grid wide">
+<div class="card"><h4>When to retrain a model (the four triggers)</h4>
+<p>Retraining should be <b>policy-driven, never ad hoc</b> — "we retrain when someone complains loudly enough" is itself a governance failure. The four legitimate triggers:</p>
+<p>① <b>Drift alert:</b> monitored performance drops below a pre-set threshold/SLA — the primary trigger. This presumes monitoring exists (condition 3). ② <b>Scheduled cadence:</b> a fixed rhythm (e.g. quarterly) in fast-moving domains like fraud, where patterns adapt continuously — Stripe retrains continuously because fraudsters do. ③ <b>World events:</b> a known structural break (recession, pandemic, new competitor, new regulation) invalidates the training era — don't wait for the metrics to confirm what you already know. ④ <b>Post-incident:</b> after a failure or a discovered bias, as part of remediation — paired with fixing the data, not just rerunning on it.</p>
+<p class="why"><b>Crucial detail:</b> retrain on a <i>recent, re-audited window</i> of data (retraining on the same flawed data reproduces the same flawed model), validate against a fresh holdout, and redeploy <i>gradually</i> — shadow mode or champion–challenger (new model runs alongside the old, decisions compared before it takes over). Retraining fixes drift; it does NOT fix label bias, proxy bias, or a broken KPI — say which problem retraining actually addresses.</p></div>
+
+<div class="card"><h4>Retrain, recalibrate, or roll back? (pick the right tool)</h4>
+<p>Not every degradation needs a full retrain. <b>Recalibrate the threshold</b> when the model's ranking is still good but the world's base rate moved — cheaper and faster (the precision/recall dial). <b>Retrain</b> when the input→outcome relationships themselves changed (concept drift). <b>Roll back</b> to the previous model or manual process when harm is active and you can't wait for either — recovery first, diagnosis second. <b>Fix the data, then retrain</b> when the problem is bias: relabel, rebalance representation, or break the feedback loop; retraining on poisoned data just launders it.</p>
+<p class="why">Exam sentence: "Retraining is the right fix for drift — but this case's problem is the labels, so retraining without a label audit would reproduce the bias with fresher data."</p></div>
+
+<div class="card"><h4>The hallucination ladder — prevent → detect → respond</h4>
+<p><b>Prevent (design time):</b> ground the model with <b>RAG</b> against the source of record (policies, fee schedules, contracts); keep <b>temperature low</b> for factual tasks; constrain the output format; fine-tune for domain behaviour; and — the strongest prevention — <b>restrict the use case</b>: don't let a generative model answer policy, legal, or numeric questions at all if a lookup can.</p>
+<p><b>Detect (run time):</b> a <b>validation gate</b> that checks outputs against the source before the customer sees them; <b>output monitoring</b> — live sampling of responses (the new GenAI governance requirement); flag low-confidence or out-of-scope answers to a human review queue; log everything so errors are findable.</p>
+<p><b>Respond (after it happens):</b> correct and disclose to affected customers (the Air Canada lesson: you are liable for what it said, and "the chatbot did it" is not a defence); feed the failure into the validation gate as a new test case; and if hallucinations recur in a category, remove that category from the bot's scope.</p>
+<p class="why"><b>The honest framing that scores:</b> hallucination cannot be eliminated — it is how next-token prediction works. The design goal is to make it <i>rare</i> (grounding), <i>caught</i> (gates), and <i>cheap</i> (scope + disclosure), not impossible. Any answer claiming a fix "prevents hallucination entirely" loses credibility.</p></div>
+
+<div class="card"><h4>Deployment discipline (the anti-Knight/Starbucks/Cruise kit)</h4>
+<p><b>Before launch:</b> define success metrics and kill criteria in writing; verify the deployment itself (config checks across all servers — "deployed" ≠ "verified"); test against real-world variation, not the demo environment. <b>Launch:</b> pilot in a limited scope → measure against the pre-agreed benchmarks → only then scale (Waymo: 200M miles before scaling; the opposite of Starbucks' 11,000 stores at once). Run <b>shadow mode</b> first where stakes are high: the system decides, a human executes, disagreements are studied. <b>After launch:</b> monitoring with a named owner, aggregation of small distributed errors into a visible signal, and a circuit breaker at a defined loss level.</p>
+<p class="why">One-line summary for a redesign answer: "pilot → measure → scale, with kill criteria written down before anyone is emotionally invested in the rollout."</p></div>
+
+<div class="card"><h4>Monitoring design — what to actually put on the dashboard</h4>
+<p>A dashboard that can't see the failure mode is decoration. Minimum set: <b>precision AND recall by subgroup</b> (aggregate accuracy hides exactly the harms that matter legally); <b>input drift statistics</b> (is today's data still shaped like the training data?); <b>override rate</b> of human reviewers (≈0% = automation bias; suddenly high = model degrading); <b>complaint/appeal rates by segment</b> wired from the frontline to the model team; and <b>outcome tracking</b> where ground truth arrives later (did approved loans repay?). Every metric needs a threshold, and every threshold needs a named owner and an escalation path.</p>
+<p class="why">Anchor: Starbucks had no mechanism to aggregate thousands of small errors into a signal; Astrid's dashboard tracked cost-per-application and was structurally blind to postcode clustering.</p></div>
+</div>
+
+<h2 style="--accent:var(--green)">🏛 Regulatory radar — what to check in every case, and what it obliges</h2>
+<div class="grid wide">
+<div class="card"><h4>EU AI Act — the one to check first</h4>
+<p><b>Structure:</b> risk-tiered. Unacceptable-risk systems are banned (social scoring, manipulative systems); <b>high-risk</b> covers systems deciding over people's lives and livelihoods — <b>credit scoring, hiring, healthcare/triage, education, justice and enforcement</b>; limited-risk mainly means transparency duties (tell people they're talking to an AI); minimal risk is unregulated.</p>
+<p><b>What high-risk actually obliges — the checklist for a case answer:</b> a <b>conformity assessment before deployment</b> (not after); documented <b>training-data quality and lineage</b>; <b>logging</b> and traceability; <b>human oversight that is genuine</b> (a rubber stamp fails the requirement); <b>accuracy and robustness evidence</b> — error rates, and who bears them; and registration/documentation duties. Fines up to <b>7% of global revenue</b>.</p>
+<p class="why"><b>How to use it in an answer:</b> ① say why the system is high-risk (it decides X about people); ② name the 2–3 obligations the case's system visibly violates (no lineage, performative oversight, no pre-deployment assessment); ③ the punchline — the Act "essentially asks: what are your error rates, and who is harmed by them?" — which connects the confusion matrix to the law in one sentence.</p></div>
+
+<div class="card"><h4>GDPR — the five-article scan</h4>
+<p>Run any case with personal data past these five: <b>Legal basis & purpose limitation</b> — was the data collected for this use? A new purpose needs a new legal basis (consent decay). <b>Data minimisation</b> — is more collected than the purpose needs? <b>Art. 17 erasure</b> — can they actually delete it, from databases AND models AND chains? Know the five response options. <b>Art. 22</b> — is a consequential decision automated? Then people are owed an explanation, human involvement, and a way to contest. <b>Privacy by design + DPIA</b> — were protections architectural, and was a Data Protection Impact Assessment done before high-risk processing began?</p>
+<p class="why"><b>Aggravating factors to spot:</b> special-category data (health, ethnicity, religion — higher bar); children; pseudonymised-but-re-identifiable data (pseudonymised ≠ anonymised — GDPR still applies, the VitaLedger lesson); cross-border transfer. Applies to any EU resident's data, processed anywhere.</p></div>
+
+<div class="card"><h4>Liability &amp; enforcement precedents (cite these as "this is already law")</h4>
+<p><b>Air Canada (2024):</b> a company is liable for everything its chatbot tells customers — "the chatbot is a separate entity" was rejected outright. Every customer-facing GenAI deployment inherits this. <b>Pieces Technologies (2024, Texas AG):</b> misrepresenting AI accuracy metrics is an enforceable violation, not just marketing puffery — self-reported metrics now carry legal risk. <b>Cruise (2023–24):</b> the cover-up cost more than the failure — editing evidence for regulators converted an accident into a deferred-prosecution agreement and a nationwide shutdown. <b>Dutch Benefits / GDPR:</b> the enforcement counterfactual — pre-GDPR fines were capped trivially (£500K for Cambridge Analytica); post-GDPR the same conduct prices at ~4% of global revenue.</p>
+<p class="why">Use these to make future-risk concrete: "under the Air Canada precedent, every one of Astrid's chat replies is a binding commitment the bank hasn't reviewed."</p></div>
+
+<div class="card"><h4>Sector &amp; specialty rules — the quick match</h4>
+<p><b>Bank risk models</b> → Basel IV / BCBS 239: evidence of data quality and lineage in all risk models — the banking regulator's version of the same demands. <b>Crypto / tokenised assets</b> → MiCA (EU markets in crypto-assets): issuer registration and disclosure — plus AML/KYC duties above thresholds (collision B territory). <b>Encryption &amp; long-lived data</b> → NIST PQC: deprecate RSA by 2030, prohibit by 2035; NSA CNSA 2.0 requires quantum-safe national-security systems by 2027 — "compliant today" has an expiry date. <b>Health data</b> → special-category GDPR + national health-record retention laws (the 30-year retention that collides with HNDL).</p>
+<p class="why"><b>Routing rule:</b> decisions about people → EU AI Act + Art. 22 · reuse of personal data → GDPR · money/assets on chains → MiCA + AML · bank models → BCBS 239 · anything encrypted that must outlive a decade → NIST clock. Naming the right regulator, not just "regulation", is a precision point.</p></div>
+</div>
+
+<h2 style="--accent:var(--red)">📚 Case evidence bank (cite as analogies — you will NOT be asked about these directly)</h2>
+<table>
+<tr><th>Case</th><th>One-line shape</th><th>Diagnosis tags</th><th>The fix that was missing</th></tr>
+<tr><td><b>Knight Capital</b> '12</td><td>1 of 8 servers not updated; dead code activated; $440M/45min; 97 alerts ignored; no kill switch</td><td>Activity proxy · Murphy · Conway · pipeline</td><td>Deployment verification, monitoring owner, circuit breaker</td></tr>
+<tr><td><b>Uber Sydney</b> '14</td><td>Surge pricing during hostage crisis; human override after 40 min (US policy existed, not global)</td><td>Metric corruption · Goodhart · context-blindness · lucky-ish save</td><td>Structural exception rule ("no surge in declared emergency"), global policy propagation</td></tr>
+<tr><td><b>Starbucks/NomadGo</b> '25–26</td><td>CV inventory across 11,000 stores failing silently 9 months; failure visible in launch video; exit misrepresented</td><td>Activity proxy · silent failure · scale before validation</td><td>Staged pilot vs benchmarks, error aggregation monitoring, honest exit disclosure</td></tr>
+<tr><td><b>Amazon Alexa</b> '18</td><td>4 individually-OK steps composed into sending a private conversation; saved by who was in the contacts</td><td>Step composition · lucky save · scale invisibility</td><td>Confirmation threshold for composed low-confidence chains</td></tr>
+<tr><td><b>Amazon Hiring</b> '14–17</td><td>10 yrs of biased hire labels; model penalised "women's"; found new proxies when corrected; scrapped</td><td>Label bias + proxy bias · Campbell · no label audit</td><td>Label audit before training, output fairness testing, diverse QA</td></tr>
+<tr><td><b>Google Photos</b> '15</td><td>"Gorillas" label on Black users; fix = suppress the label, not the model; still absent 2026</td><td>Representation bias · suppression ≠ remediation · lucky save (one tweet)</td><td>Representative data, subgroup testing pre-launch, actual retraining</td></tr>
+<tr><td><b>Air Canada</b> '22–24</td><td>Chatbot hallucinated bereavement policy; "separate legal entity" defence rejected; company liable</td><td>Output proxy · hallucination · no retrieval layer</td><td>RAG grounded in real policy + validation gate; disclosure to customers</td></tr>
+<tr><td><b>Pieces Tech</b> '24</td><td>Clinical GenAI marketed self-defined "&lt;0.001% hallucination rate"; first AI-accuracy enforcement (Texas AG)</td><td>Self-reported metric proxy · no independent validation</td><td>Third-party audit, standard metrics, real patient-safety measurement</td></tr>
+<tr><td><b>Dutch Benefits</b> '13–21</td><td>Nationality as risk signal; budget conditional on fraud found; rubber-stamp oversight; 26,000 families; cabinet resigned</td><td>All 5 warning signs · label bias · Goodhart · automation bias · Lucas · Ashby</td><td>Illegal-feature audit, explainability + appeal route, genuine human review, sane incentives</td></tr>
+<tr><td><b>IBM Watson</b> '12–17</td><td>Text retrieval sold as clinical reasoning; synthetic training data; $62M, 12 extensions, 0 patients</td><td>Ideation mismatch · Parkinson · Gall · two-actor incentive · Peter</td><td>Capability-fit validation before announcement, kill criteria, real data</td></tr>
+<tr><td><b>Post Office Horizon</b> '99–25</td><td>Known-buggy system's data used to prosecute ~900 subpostmasters; evidence suppressed; 20+ yrs to justice</td><td>Organisational failure · automation bias at scale · Peter · Goodhart (prosecution targets)</td><td>Believe consistent human reports, independent system audit, disclosure duties</td></tr>
+<tr><td><b>Arup deepfake</b> '24</td><td>$25.6M via deepfake CFO video call built from public footage; caught by routine follow-up call</td><td>AI as weapon · broken verification norm · Conway (siloed offices)</td><td>Out-of-band verification protocol for high-value transfers</td></tr>
+<tr><td><b>Cruise</b> '23</td><td>Vehicle dragged pedestrian 20ft executing pullover protocol; edited video shown to regulators</td><td>Agentic Observe-step failure · scale before data · human cover-up (separable failure)</td><td>Re-evaluation step after anomaly; Waymo-style patience; full disclosure</td></tr>
+<tr><td><b>Cambridge Analytica</b> '13–18</td><td>87M profiles via friends-of-friends API; Facebook knew 2015, told no one; $5B fine; GDPR born</td><td>Purpose limitation violation · ownership ambiguity · regulatory lag</td><td>Purpose-bound API design, real deletion verification, user notification</td></tr>
+<tr><td><b>YouTube</b></td><td>Watch-time optimised perfectly; radicalisation pathways followed; "reduced 70%" was really 40%</td><td>Metric corruption · feedback loop bias · McNamara · tail-risk blindness</td><td>Welfare-linked metrics, loop-breaking, independent measurement</td></tr>
+<tr><td><b>Clearview AI</b></td><td>3B+ faces scraped; "public data" ≠ any use acceptable; scope crept to mass surveillance</td><td>Consent absent · scope creep · regulatory lag</td><td>Purpose boundaries, consent basis, someone empowered to ask "should we?"</td></tr>
+<tr><td><b>Theranos</b></td><td>$9B valuation, 0 working tests; trade-secret opacity defeated verification; board of celebrities</td><td>Self-reported proxy · information asymmetry · board as decoration · Clarke's 3rd</td><td>Independent technical validation before deployment; empowered whistle-blowers</td></tr>
+<tr><td><b>Spain 0-0 Cape Verde</b> '26</td><td>xG said 92% Spain; commoditised analytics; Cape Verde won on disciplined execution</td><td>Democratisation of strategy · tail events · execution &gt; strategy</td><td>—: the lesson is where advantage lives when everyone has the same models</td></tr>
+<tr><td><b>JPMorgan Quantum</b></td><td>Real $100M research; overstated "5–10 yr advantage"; quiet recalibration, no scandal</td><td>Near-miss · narrative–feasibility gap · measurable ≠ meaningful</td><td>Honest measurement (advantage, not papers), feedback loop to kill the narrative</td></tr>
+</table>
+
+<h3>Success contrasts (your "what good looks like" citations)</h3>
+<div class="grid">
+<div class="card"><h4>Stripe Radar</h4><p>Ground truth built in (every transaction is really fraud or not) · continuous retraining · fail-safe design. 59%→97% detection.</p><p class="why">Cite against: labelling problems, no monitoring, no retraining.</p></div>
+<div class="card"><h4>DeepMind AlphaFold</h4><p>~170K peer-reviewed structures — quality over quantity · CASP = the most rigorous possible holdout · open release as governance.</p><p class="why">Cite against: synthetic data (Watson), no validation, self-graded benchmarks.</p></div>
+<div class="card"><h4>JPMorgan COIN</h4><p>Extremely narrow scope · expert-annotated data · every output verifiable against source · unusual cases routed to humans · incremental.</p><p class="why">Cite against: grand-scope projects, no human routing. "Ambitious AI on boring governance foundations."</p></div>
+<div class="card"><h4>Waymo One</h4><p>200M miles before scaling · redundant sensors (fail safe over cost) · transparency reports. The anti-Cruise.</p><p class="why">Cite against: scale-before-data, selective disclosure. "Scale is earned by data, not announced on a roadmap."</p></div>
+</div>
+
+<h2 style="--accent:var(--purple)">🔮 Week-3 style questions (predict &amp; decide — "no correct answers")</h2>
+<div class="grid wide">
+<div class="card"><h4>If the case asks "what SHOULD they do?" (governance decision)</h4>
+<p>Structure: ① name the tension precisely (certain present cost vs uncertain future risk · innovation vs safety · average benefit vs subgroup harm · moral authority vs enforcement power) → ② argue both sides briefly with course anchors → ③ decide, with conditions ("sign, but demand: use-case boundaries, audit rights, sunset clause") → ④ name who is accountable and the review trigger.</p>
+<p class="why">The examiner rewards a <i>reasoned</i> decision with guardrails, not a "right" answer. The Life-Exam tier: name an owner, build in a kill switch, accept accountability.</p></div>
+<div class="card"><h4>Future-risk phrases that score (step 4 of the skeleton)</h4>
+<p>"The feedback loop means today's small bias is tomorrow's training data." · "At 95% per step, ten steps is a coin flip — autonomy without checkpoints compounds." · "Every month deployed under the old assumption, the harvested exposure grows (HNDL)." · "On-chain, every mistake is final — the agent's error cannot be reversed." · "Better-than-status-quo on average can still be worse for an untested subgroup." · "The human override exists on paper; if the override rate is ~0%, it will be nominal within a year (automation bias)."</p></div>
+<div class="card"><h4>Counterfactual trap (from the triage scenario)</h4>
+<p>The alternative to an imperfect AI is not perfection — it's the flawed status quo (overcrowded human triage has its own error rate). Weigh both error rates. But "better on average" doesn't settle subgroup safety, liability, or consent — say which bar the system must clear and who decides.</p></div>
+<div class="card"><h4>Judgment-call cheat lines (W3 scenarios)</h4>
+<p>Purpose drift (Palantir): "the technology is identical; the domain and consent context are not — contract the boundaries or don't sign." · PQC ($1B): "inaction is also a decision — and soon an audit finding." · Central-bank AI: "two correct quarters is not being right for the right reasons — disclose method, not just track record; herding makes 'independent' decisions correlated." · Sovereign AI: "sovereignty is a spectrum (territorial/operational/technological/legal) — buy influence in one layer, don't cosplay all four." · Digital euro: "capping the public option to protect private banks is a design compromise of the stated intent — name it." · Triage: "human-in-the-loop is only real if overrides actually happen."</p></div>
+</div>
+
+<div class="callout"><b>4-hour time plan:</b> MC first, fast, flag doubts (~45–60 min) → Short answers: skeleton each in 2 lines before writing (~60–75 min) → Case(s): spend the remaining half; 10 min reading/diagnosing before writing anything; write to the 7-step skeleton; save 15 min to add one cross-domain sentence + one trade-off acknowledgment to every long answer — those two sentences are the 7→10 jump.</div>
+</section>
+
+<!-- ==================== PANE 4: DRILLS ==================== -->
+<section class="pane" id="p4">
+<div class="intro"><b>How to use before Friday:</b> quiz yourself — read each prompt, answer out loud, then open the reveal. These are the course's own drills (W3 recap + practice test), so they calibrate you to exactly how the examiner phrases scenarios. On exam day, use this tab to warm up in the first 5 minutes.</div>
+
+<h2 style="--accent:var(--blue)">Practice test (all 15, condensed — "these scenarios will not appear in the main exam")</h2>
+<details><summary>Q1 · Six months in, team still cleaning data, no model code. Behind schedule?</summary><p><b>No — normal.</b> ML is 80% data work, 20% modelling; most projects fail at problem definition and data collection/cleaning, not algorithm choice.</p></details>
+<details><summary>Q2 · 2021 fraud model quietly flags less by 2023 while fraud rises; no bugs found.</summary><p><b>Distribution shift</b> — fraud patterns changed after training; the world moved, the model stood still. (Not overfitting: it worked fine at first.)</p></details>
+<details><summary>Q3 · 1,000 patients, 200 need follow-up; model flags 340, 190 correct. Behaviour?</summary><p><b>Low precision (190/340 = 56%), high recall (190/200 = 95%)</b> — catches almost all real cases at the cost of unnecessary referrals; a deliberate trade-off when a miss is worse.</p></details>
+<details><summary>Q4 · Vendor: "It reads the portfolio and reasons through options." What's misleading?</summary><p>LLMs <b>predict the most probable next output</b> — they don't reason or understand as implied. Plausible ≠ correct, and the model can't know when it's wrong.</p></details>
+<details><summary>Q5 · Assistant now auto-initiates refunds, sends emails, updates CRM. What shifted?</summary><p><b>Generative → agentic.</b> From producing output to taking autonomous multi-step action in live systems (plan-act-observe loop).</p></details>
+<details><summary>Q6 · LLM for regulatory reports — genuine strengths? (multi)</summary><p><b>Drafting structured text + summarising long documents.</b> NOT: guaranteeing figures, verifying regulations are current — humans must check every specific claim.</p></details>
+<details><summary>Q7 · Share of AI projects abandoned before production?</summary><p><b>70–90% (course figure: 87%, Gartner).</b> Cause: data quality, ownership, governance — not algorithms.</p></details>
+<details><summary>Q8 · "Which system generated this field, how was it transformed, was it modified?"</summary><p><b>Data lineage</b> — the full journey from source to use; prerequisite for audits and regulator queries.</p></details>
+<details><summary>Q9 · Pricing model: inputs unchanged, input→claim relationships shifted (new competitor changed behaviour).</summary><p><b>Concept drift / the world changed</b> → update/retrain on recent data; monitor continuously. (Also a whiff of Lucas: the market adapted.)</p></details>
+<details><summary>Q10 · GDPR erasure request; customer's data trained a live credit model. Options? (multi)</summary><p><b>Delete source + retrain · differential privacy/partitioning to limit individual influence · document complexity and assess risk.</b> NOT: shut down all models (disproportionate).</p></details>
+<details><summary>Q11 · "Wrong answers cancel, right answer reinforces, so measurement reads the right answer." Concept?</summary><p><b>Interference</b> — the mechanism that makes quantum algorithms useful; Grover's and Shor's both rely on it.</p></details>
+<details><summary>Q12 · Agency stores encrypted traffic it can't read; advisor warns about 25-year mortgages. Threat?</summary><p><b>Harvest Now, Decrypt Later</b> — data with a 10+ year secrecy lifetime is already at risk today.</p></details>
+<details><summary>Q13 · Startup claims room-temp, million-qubit, zero-error-correction quantum computer. Sceptical because…? (multi)</summary><p><b>All four reasons:</b> hardware needs ~absolute zero; million error-free logical qubits don't exist; error correction needs many physical per logical qubit; room-temp operation would be a major unsolved breakthrough.</p></details>
+<details><summary>Q14 · Bank wants internal transfers: thousands tx/min, confidential, KYC. Which chain?</summary><p><b>Private/permissioned</b> — known participants (KYC), privacy, fast consensus. Public chains are pseudonymous and too slow.</p></details>
+<details><summary>Q15 · 3 shipping firms build shared chain; biggest hosts it; other two quit; platform dies. Why?</summary><p><b>Governance, not technology</b> — competitors wouldn't trust a platform controlled by their largest rival (the TradeLens pattern). Neutral governance is essential for consortia.</p></details>
+
+<h2 style="--accent:var(--gold)">Name-the-law drills (W3 opening recap)</h2>
+<details><summary>1 · Tickets-closed-per-hour rises; issues unfixed; complaints quietly rise.</summary><p><b>Goodhart's / Campbell's family</b> — the metric became the target.</p></details>
+<details><summary>2 · Migration given 8 weeks takes exactly 8 weeks (elsewhere done in 2 under pressure).</summary><p><b>Parkinson's Law</b> — work expands to fill the time available.</p></details>
+<details><summary>3 · Failover never tested in 3 years; primary dies; failover doesn't trigger.</summary><p><b>Murphy's Law</b> — the untested safeguard fails when needed.</p></details>
+<details><summary>4 · Rollout 3 months late; +15 engineers; six weeks later it's 5 months late.</summary><p><b>Brooks's Law</b> — coordination overhead outweighs added capacity.</p></details>
+<details><summary>5 · Fraud reporting in 3 inconsistent formats — one per regional office.</summary><p><b>Conway's Law</b> — the system mirrors the org's communication structure.</p></details>
+<details><summary>6 · 2015: "transforms the industry in 2 years." 2017: "failure." 2025: quietly underpins everything.</summary><p><b>Amara's Law</b> — overestimate short-run, underestimate long-run.</p></details>
+<details><summary>7 · 5-person central compliance team reviews every transaction for 40M customers; errors rise.</summary><p><b>Ashby's Law</b> — the controller isn't complex enough for the system's variety.</p></details>
+
+<h2 style="--accent:var(--gold)">Name-the-bias drills</h2>
+<details><summary>1 · Hospital predicts "need for care" using past healthcare <i>spending</i> as the label; low-income patients spent less due to access.</summary><p><b>Historical/label bias</b> — lives in the label: spending stood in for need but measured access.</p></details>
+<details><summary>2 · Insurer removes gender; keeps occupation + vehicle type; pricing still splits by gender.</summary><p><b>Proxy/measurement bias</b> — correlated features reconstruct the excluded variable.</p></details>
+<details><summary>3 · Lending model rejects Group A more → no repayment data for them → next retrain has fewer Group A successes.</summary><p><b>Feedback loop bias</b> — the model's own outputs shrink what future training data can show (same shape as YouTube).</p></details>
+<details><summary>4 · Voice assistant trained mostly on one accent performs worse on others; nothing labelled accent.</summary><p><b>Representation/sampling bias</b> — no bad label, no proxy; the group is simply under-sampled.</p></details>
+<details><summary>5 · Résumé screener trained on 10 years of "who got promoted" favours one demographic even with names removed.</summary><p><b>Historical/label bias</b> — the promotion outcome itself encodes past decisions. (If it also reconstructs demographics from hobbies/schools → proxy bias on top.)</p></details>
+<details><summary>6 · Imaging model worse on scans from one equipment type — far fewer such scans in training.</summary><p><b>Representation bias</b> — an underrepresented slice of training data.</p></details>
+
+<h2 style="--accent:var(--gold)">Name-the-proxy drills</h2>
+<details><summary>1 · Patch rolled out to every server on the list; ticket closed; nobody confirmed it's running.</summary><p><b>Activity proxy</b> — doing the task treated as proof it worked.</p></details>
+<details><summary>2 · Fluent AI translation published; no target-language speaker checked it.</summary><p><b>Output proxy</b> — fluency treated as accuracy, no check against source meaning.</p></details>
+<details><summary>3 · Startup's own unpublished benchmark shows it beats competitors.</summary><p><b>Self-reported metric proxy</b> — self-designed, self-graded, unreproducible.</p></details>
+
+<h2 style="--accent:var(--gold)">Name-the-collision drills</h2>
+<details><summary>1 · Land registry on a public chain; court orders a fraudulent transfer reversed; registry can't edit.</summary><p><b>A · Permanence vs right to change</b> — the immutability that creates trust blocks the correction.</p></details>
+<details><summary>2 · Anonymous art marketplace; tax authority requires reporting gains above a threshold.</summary><p><b>B · Anonymity vs accountability</b> — fix: identity verification only above the legal threshold.</p></details>
+<details><summary>3 · Pharma encrypts 30-year trial data with today's RSA, "secure for the retention period."</summary><p><b>C · Present security vs future-dated break</b> — HNDL: unbroken today says nothing about 30 years.</p></details>
+<details><summary>4 · Two departments sharing one database propose a blockchain "for better trust."</summary><p><b>D · Necessity vs overhead</b> — they already trust each other; a shared database does the job.</p></details>
+
+<h2 style="--accent:var(--gold)">Annoyance-or-disaster drills (threshold calls)</h2>
+<details><summary>1 · Wildfire evacuation alerts.</summary><p><b>Chase recall</b> — missed fire (FN) risks lives; unneeded evacuation (FP) is survivable.</p></details>
+<details><summary>2 · Small-business spam filter (every email could be a customer).</summary><p><b>Chase precision</b> — a real customer email lost (FP) is the disaster; missed spam (FN) is annoying. <i>Note the flip: never "always recall" — find the disaster every time.</i></p></details>
+<details><summary>3 · Data-centre overheat auto-shutdown.</summary><p><b>Chase recall</b> — missed overheat (FN) = fire/destroyed hardware; unneeded shutdown (FP) = downtime.</p></details>
+<details><summary>4 · Hospital follow-up screening (the Q3 numbers).</summary><p><b>Recall</b> — and be ready to compute: P = 190/340 = 56%, R = 190/200 = 95%, F1 ≈ 0.70.</p></details>
+<details><summary>5 · AML flags: 200/day, review team capacity 40/day.</summary><p><b>Precision first</b> — recall is pointless if flags overwhelm capacity; the teacher's own tier-4 example. Capacity is part of the cost asymmetry.</p></details>
+
+<h2 style="--accent:var(--purple)">Calibrate your answer tier (from the Exam Approach page)</h2>
+<details><summary>What does a tier-2 (grade 0–4) answer look like?</summary><p>Right words, wrong meanings: "Recall is when it remembers things." Guessing definitions from the word itself. Fix: learn what terms actually mean.</p></details>
+<details><summary>What does a tier-3 (grade 4–7) answer look like?</summary><p>Correct definitions, correct conclusion, answers the question — but no <i>why</i>, no example, no "it depends." Fix: add the reasoning (cost asymmetry, mechanism).</p></details>
+<details><summary>What does a tier-4 (grade 7–10) answer look like?</summary><p>Adds why + a concrete case + "it depends" with context (AML capacity example). Shows the trade-off, not just the conclusion.</p></details>
+<details><summary>What does a tier-5 (grade 10–12) answer look like?</summary><p>Connects a second domain by reasoning: threshold choice → demographic clustering → EU AI Act high-risk → Goodhart. Or: purpose limitation → but compliance ≠ fairness → location proxies income. Same pattern, two places, connected.</p></details>
+<details><summary>The 60-second pre-writing drill for every big question</summary><p>Jot: CONCEPT (which?) → WHY (mechanism) → CASE (which analogy?) → X-DOMAIN (which of the 4 connections?) → TRADE-OFF (what does my answer cost?). Then write.</p></details>
+</section>
+</main>
+<script>
+const tabs=document.querySelectorAll('.tab'),panes=()=>document.querySelectorAll('.pane');
+tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');panes().forEach(p=>p.classList.toggle('show',p.id===t.dataset.t));document.getElementById('q').dispatchEvent(new Event('input'));}));
+const ALIAS={
+  'fn':'false negative','fp':'false positive','tp':'true positive','tn':'true negative',
+  'pqc':'post-quantum','hndl':'harvest','rag':'retrieval','llm':'language model',
+  'ml':'machine learning','genai':'generative','ai':'artificial',
+  'gdpr':'erasure','erasure':'gdpr','art17':'article 17','art22':'article 22',
+  'eu':'ai act','act':'eu ai act','dp':'differential privacy','dpia':'impact assessment',
+  'shor':'factoring','grover':'search','qubit':'quantum bit','pow':'proof of work',
+  'btc':'bitcoin','eth':'ethereum','kyc':'identity','aml':'money laundering',
+  'cbdc':'central bank digital','nft':'token','f1':'harmonic','drift':'shift','shift':'drift',
+  'bias':'biased','proxy':'proxies','law':'laws','goodhart':'measure becomes a target'
+};
+function wordHit(text,w){
+  if(text.includes(w))return true;
+  const ws=w.endsWith('s')?w.slice(0,-1):w+'s';           // plural/singular
+  if(text.includes(ws))return true;
+  const a=ALIAS[w];
+  return !!(a&&text.includes(a));
+}
+function els(){return document.querySelectorAll('.card,.pill,details,.steps li,.callout');}
+function rows(){return Array.from(document.querySelectorAll('table tr')).filter(r=>!r.querySelector('th'));}
+function tidyChrome(searching){
+  // reset
+  document.querySelectorAll('h2,h3,.intro,table').forEach(e=>e.classList.remove('hidden'));
+  if(!searching) return;
+  // hide intros while searching
+  document.querySelectorAll('.intro').forEach(e=>e.classList.add('hidden'));
+  // hide tables with no visible data rows
+  document.querySelectorAll('table').forEach(t=>{
+    const vis=[...t.querySelectorAll('tr')].some(r=>!r.querySelector('th')&&!r.classList.contains('hidden'));
+    t.classList.toggle('hidden',!vis);
+  });
+  // hide h2/h3 headers whose section contains no visible match
+  const MATCH='.card,.pill,details,li,.callout';
+  const hasVis=el=>{
+    if(el.matches&&el.matches(MATCH)&&!el.classList.contains('hidden'))return true;
+    if(el.tagName==='TABLE')return !el.classList.contains('hidden');
+    return el.querySelectorAll&&[...el.querySelectorAll(MATCH)].some(x=>!x.classList.contains('hidden'));
+  };
+  document.querySelectorAll('section.pane').forEach(p=>{
+    const kids=[...p.children];
+    kids.forEach((k,i)=>{
+      if(!/^H[23]$/.test(k.tagName))return;
+      const lvl=+k.tagName[1];let any=false;
+      for(let j=i+1;j<kids.length;j++){
+        const t=kids[j].tagName;
+        if(/^H[23]$/.test(t)&&+t[1]<=lvl)break;
+        if(hasVis(kids[j])){any=true;break;}
+      }
+      k.classList.toggle('hidden',!any);
+    });
+  });
+}
+document.getElementById('q').addEventListener('input',function(){
+  const q=this.value.trim().toLowerCase();
+  if(!q){els().forEach(e=>e.classList.remove('hidden'));rows().forEach(r=>r.classList.remove('hidden'));
+    tidyChrome(false);
+    document.getElementById('hits').textContent='';
+    panes().forEach(p=>p.classList.toggle('show',document.querySelector('.tab.active').dataset.t===p.id));return;}
+  panes().forEach(p=>p.classList.add('show'));
+  const words=q.split(/\s+/).filter(w=>w.length>1);
+  const all=[...els(),...rows()];
+  const texts=all.map(e=>e.textContent.toLowerCase());
+  // pass 1: element must match ALL words (order-independent)
+  let hitFlags=texts.map(t=>words.every(w=>wordHit(t,w)));
+  let mode='all words';
+  // pass 2 (broaden): if nothing found and multi-word, match ANY word
+  if(!hitFlags.some(Boolean)&&words.length>1){
+    hitFlags=texts.map(t=>words.some(w=>wordHit(t,w)));
+    mode='any word (broadened)';
+  }
+  let hits=0;
+  all.forEach((e,i)=>{e.classList.toggle('hidden',!hitFlags[i]);if(hitFlags[i])hits++;});
+  tidyChrome(true);
+  document.getElementById('hits').textContent=hits+' matches · '+mode+' · all tabs';
+});
+
+// "Go to" links in the Index: fill the search box and run the same search
+document.querySelectorAll('a.goto').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const q=document.getElementById('q');
+  q.value=a.dataset.q;
+  q.dispatchEvent(new Event('input'));
+  window.scrollTo({top:0,behavior:'smooth'});
+  q.focus();
+}));
+
+// Copy buttons on all model answers (tab 2) and templates (tab 3)
+function copyText(t,btn){
+  const done=()=>{btn.textContent='✓ Copied';setTimeout(()=>btn.textContent='📋 Copy',1200);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(()=>fallbackCopy(t,done));}
+  else fallbackCopy(t,done);
+}
+function fallbackCopy(t,done){
+  const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();
+}
+document.querySelectorAll('#p2 .card.answer, #p3 .card.tpl').forEach(c=>{
+  const b=document.createElement('button');b.className='copybtn';b.textContent='📋 Copy';
+  b.addEventListener('click',ev=>{ev.stopPropagation();
+    const cl=c.cloneNode(true);
+    cl.querySelectorAll('.copybtn').forEach(x=>x.remove());
+    const h=cl.querySelector('h4');if(h)h.remove();
+    let t=cl.innerText.replace(/⤴ Upgrade:\s*/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+    copyText(t,b);
+  });
+  c.insertBefore(b,c.firstChild);
+});
+</script>
+</body>
+</html>
